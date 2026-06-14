@@ -1,0 +1,614 @@
+
+/* Container que envolve o emblema e o balão */
+.badge-wrapper {
+    position: relative;
+    cursor: pointer;
+}
+
+/* O Balão Customizado (Escondido por padrão) */
+.custom-badge-tooltip {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    bottom: 100%; /* Joga o balão para cima do emblema */
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 8px; /* Distância entre o balão e o emblema */
+    
+    /* Visual Habbo Clássico */
+    background: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    padding: 6px 8px;
+    
+    width: max-content;
+    max-width: 220px;
+    z-index: 100;
+    
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-align: left;
+    
+    transition: opacity 0.1s ease;
+}
+
+/* A setinha preta embaixo do balão */
+.custom-badge-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: #000 transparent transparent transparent;
+}
+
+/* Revela o balão ao passar o mouse */
+.badge-wrapper:hover .custom-badge-tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Estilos dos Textos Internos */
+.tooltip-title {
+    font-weight: bold;
+    font-size: 12px;
+    color: #000;
+}
+
+.tooltip-desc {
+    font-size: 11px;
+    color: #000;
+    line-height: 1.2;
+}
+
+/* Pílula Cinza de Raridade */
+.tooltip-rarity-pill {
+    background: #787878;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 3px 8px;
+    border-radius: 12px;
+    width: fit-content;
+    margin-top: 2px;
+}
+.user-profile {
+    width: 700px;
+    max-width: 95vw;
+    background: #ececec;
+    border: 2px solid #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow:
+        0 0 0 1px #a9a9a9,
+        0 10px 25px rgba(0, 0, 0, 0.35);
+
+    .nitro-card-header {
+        background: linear-gradient(
+            180deg,
+            #2e86c7 0%,
+            #216ca8 100%
+        );
+        height: 34px;
+        border-bottom: 1px solid #154d7b;
+        position: relative;
+
+        .close-button {
+            background: #d93d3d;
+            border: 1px solid #8c1f1f;
+            border-radius: 4px;
+            transition: all .2s ease;
+
+            &:hover {
+                transform: scale(1.05);
+                filter: brightness(1.1);
+            }
+        }
+    }
+
+    .profile-banner {
+        width: 100%;
+        height: 170px;
+        background:
+            linear-gradient(
+                rgba(0,0,0,.08),
+                rgba(0,0,0,.08)
+            ),
+            url('https://images.habbo.com/c_images/article_images_br/art_football_carl.png'),
+            linear-gradient(
+                135deg,
+                #9b63d4 0%,
+                #824cb8 100%
+            );
+
+        background-size: cover;
+        position: relative;
+        border-bottom: 3px solid #71429f;
+
+        .banner-badges {
+            position: absolute;
+            right: 15px;
+            bottom: 15px;
+            display: flex;
+            gap: 6px;
+            padding: 6px;
+            border-radius: 8px;
+            background: rgba(0,0,0,.25);
+            backdrop-filter: blur(3px);
+        }
+    }
+
+    .profile-main-content {
+        background: #ececec;
+        padding: 10px;
+    }
+
+    .user-info-section {
+        position: relative;
+        margin-top: -80px;
+        display: flex;
+        gap: 15px;
+        align-items: flex-end;
+        z-index: 2;
+
+        .avatar-wrapper {
+            width: 100px;
+            height: 140px;
+            background: linear-gradient(
+                180deg,
+                #f5f5f5 0%,
+                #dadada 100%
+            );
+
+            border: 3px solid #ffffff;
+            border-radius: 8px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            box-shadow:
+                0 0 0 1px #b4b4b4,
+                0 5px 15px rgba(0,0,0,.25);
+        }
+
+        .user-details {
+            flex: 1;
+            background: rgba(255,255,255,.9);
+            padding: 12px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,.08);
+
+            .username {
+                font-size: 22px;
+                font-weight: 700;
+                color: #222;
+                margin-bottom: 4px;
+            }
+
+            .motto {
+                font-size: 13px;
+                color: #666;
+            }
+        }
+    }
+
+    .stats-container {
+        margin-top: 12px;
+        display: flex;
+        gap: 8px;
+
+        .stat-box {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            padding: 10px;
+
+            background: #ffffff;
+            border-radius: 8px;
+
+            box-shadow:
+                0 0 0 1px #d5d5d5,
+                0 2px 8px rgba(0,0,0,.05);
+
+            transition: all .2s ease;
+
+            &:hover {
+                transform: translateY(-2px);
+            }
+        }
+
+        .stat-text {
+            display: flex;
+            flex-direction: column;
+
+            strong {
+                font-size: 14px;
+                color: #222;
+            }
+
+            span {
+                font-size: 11px;
+                color: #777;
+            }
+        }
+    }
+
+    .rooms-button {
+        cursor: pointer;
+        border-radius: 6px;
+        padding: 8px 12px;
+        background: linear-gradient(
+            180deg,
+            #45b2ff 0%,
+            #2189d0 100%
+        );
+
+        color: white;
+        font-weight: 600;
+
+        transition: .2s ease;
+
+        &:hover {
+            filter: brightness(1.08);
+        }
+    }
+
+    .bottom-section {
+        margin-top: 10px;
+        display: flex;
+        gap: 10px;
+
+        .bg-muted {
+            background: #fff !important;
+            border: 1px solid #d8d8d8;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.04);
+        }
+    }
+
+    .user-groups-container,
+    .friends-container {
+        background: #fff;
+        border-radius: 8px;
+        border: 1px solid #d9d9d9;
+        padding: 10px;
+    }
+
+    .user-groups-container .layout-grid-item {
+        width: 56px;
+        transition: .2s ease;
+
+        &:hover {
+            transform: scale(1.05);
+        }
+    }
+
+    .user-relationship {
+        min-height: 55px;
+        border-radius: 6px;
+        transition: .2s ease;
+
+        &:hover {
+            background: rgba(0,0,0,.04);
+        }
+
+        .avatar-image-container {
+            width: 50px;
+            height: 50px;
+
+            .avatar-image {
+                top: 20px;
+                right: -8px;
+            }
+        }
+    }
+
+    .user-relationship-count {
+        color: #666 !important;
+        font-weight: 600;
+    }
+
+    .icon-trophy,
+    .icon-crystal,
+    .icon-respect,
+    .icon-rooms-key {
+        width: 28px;
+        height: 28px;
+        background-size: contain !important;
+    }
+
+    @media (max-width: 768px) {
+        width: 95vw;
+
+        .stats-container {
+            flex-wrap: wrap;
+
+            .stat-box {
+                min-width: calc(50% - 4px);
+            }
+        }
+
+        .bottom-section {
+            flex-direction: column;
+        }
+
+        .user-info-section {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+    }
+
+    .profile-header {
+    display: flex;
+    gap: 15px;
+    padding: 15px;
+}
+
+.profile-avatar-card {
+    width: 110px;
+    min-width: 110px;
+    height: 140px;
+
+    background: #f4f4f4;
+
+    border: 2px solid #fff;
+    border-radius: 8px;
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow:
+        0 0 0 1px #bcbcbc,
+        0 5px 15px rgba(0,0,0,.15);
+}
+
+.status-badge {
+    position: absolute;
+
+    bottom: -8px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    padding: 3px 8px;
+
+    border-radius: 999px;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    color: #fff;
+}
+
+.status-badge.online {
+    background: #29a329;
+}
+
+.status-badge.offline {
+    background: #d33;
+}
+
+.profile-information {
+    flex: 1;
+}
+
+.profile-username {
+    font-size: 24px;
+    color: #222;
+}
+
+.profile-motto {
+    color: #666;
+    margin-top: 4px;
+}
+
+.profile-details {
+    margin-top: 12px;
+
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.profile-detail {
+    background: #fff;
+
+    padding: 8px 12px;
+
+    border-radius: 6px;
+
+    min-width: 120px;
+
+    box-shadow:
+        0 0 0 1px #ddd,
+        0 2px 6px rgba(0,0,0,.05);
+
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-detail span {
+    font-size: 11px;
+    color: #888;
+}
+
+.profile-detail strong {
+    font-size: 14px;
+    color: #222;
+}
+
+.profile-actions {
+    margin-top: 15px;
+}
+
+.profile-badges {
+    padding: 8px;
+}
+
+.badge-slot {
+    width: 46px;
+    height: 46px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: linear-gradient(
+        180deg,
+        #ffffff 0%,
+        #ececec 100%
+    );
+
+    border: 1px solid #cfcfcf;
+    border-radius: 8px;
+
+    transition: all .2s ease;
+
+    box-shadow:
+        0 1px 3px rgba(0,0,0,.08);
+
+    cursor: pointer;
+}
+
+.badge-slot:hover {
+    transform: translateY(-3px) scale(1.08);
+
+    border-color: #57a8ff;
+
+    box-shadow:
+        0 4px 12px rgba(0,0,0,.15);
+}
+
+.badge-slot img {
+    image-rendering: pixelated;
+}
+
+.badge-slot.featured {
+    background: linear-gradient(
+        180deg,
+        #fff8d8 0%,
+        #ffe88c 100%
+    );
+
+    border: 1px solid #e2b000;
+
+    box-shadow:
+        0 0 10px rgba(255, 196, 0, .35);
+}
+
+
+
+
+.profile-btn {
+    border: 0;
+    border-radius: 6px;
+
+    padding: 10px 18px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.add-friend {
+    background: #1ea93f;
+    color: white;
+}
+
+.add-friend:hover {
+    filter: brightness(1.1);
+}
+
+.friend-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+    @media (max-width: 480px) {
+        .stats-container {
+            .stat-box {
+                min-width: 100%;
+            }
+        }
+
+        .profile-banner {
+            height: 120px;
+        }
+
+        .user-info-section {
+            margin-top: -50px;
+        }
+
+        .avatar-wrapper {
+            width: 80px !important;
+            height: 120px !important;
+        }
+    }
+}
+
+.user-groups-container,
+.modern-groups-grid {
+    padding: 4px;
+}
+
+.group-card {
+    position: relative;
+
+    width: 64px;
+    height: 64px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: linear-gradient(
+        180deg,
+        #ffffff 0%,
+        #ececec 100%
+    );
+
+    border: 1px solid #d5d5d5;
+
+    cursor: pointer;
+
+    transition: all .2s ease;
+
+    box-shadow:
+        0 2px 5px rgba(0,0,0,.08);
+}
+
+.group-card:hover {
+    transform: translateY(-3px);
+
+    border-color: #4da3ff;
+
+    box-shadow:
+        0 8px 16px rgba(0,0,0,.12);
+}
+
+.group-card.active,
+.group-card.layout-grid-item-active {
+    border-color: #2d89ef;
+
+    background: linear-gradient(
+        180deg,
+        #d8ecff 0%,
+        #b7daff 100%
+    );
+
+    box-shadow:
+        0 0 12px rgba(45,137,239,.35);
+}

@@ -1,0 +1,187 @@
+@import './spectator/RoomSpectatorView';
+@import './widgets/RoomWidgets';
+/* Container Principal do Menu */
+/* Container Principal do Menu */
+.custom-room-tools-menu {
+    position: absolute;
+    left: 0;
+    bottom: 120px; /* Aumente ou diminua esse valor para ajustar a altura certinha */
+    display: flex;
+    align-items: stretch;
+    z-index: 10;
+}
+
+/* Aba escura do lado esquerdo (< / >) - Agora é clicável */
+.menu-edge-tab {
+    width: 14px;
+    background: #2b2b2b;
+    border-radius: 0 4px 4px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid #1a1a1a;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.3);
+    cursor: pointer; /* Cursor de clique */
+    transition: background 0.2s;
+}
+
+/* Quando o body tiver essa classe, os balões ficam invisíveis */
+body.hide-chat-bubbles .bubble-container {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+.menu-edge-tab:hover {
+    background: #3b3b3b;
+}
+
+/* Setas do botão esconder/mostrar */
+.icon-caret-left {
+    border: solid #888;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(135deg);
+}
+
+.icon-caret-right {
+    border: solid #888;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(-45deg); /* Vira para o outro lado */
+}
+
+/* Fundo Principal do Menu - MAIS COMPACTO */
+.menu-content {
+    background: rgba(51, 51, 51, 0.95);
+    border-radius: 0 6px 6px 0;
+    padding: 10px 14px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+    border: 1px solid #4a4a4a;
+    border-left: none;
+    min-width: 180px; /* Reduzido de 220px */
+}
+
+/* Seção do Zoom */
+.zoom-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.zoom-label {
+    color: #cecece;
+    font-size: 11px; /* Fonte menor */
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.zoom-controls {
+    display: flex;
+    gap: 4px;
+}
+
+.zoom-btn {
+    width: 16px; /* Botões de zoom menores */
+    height: 16px;
+    background: #666;
+    border: 1px solid #111;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Mini ícones + e - para o botão de zoom pequeno */
+.icon-plus-small, .icon-minus-small {
+    background: #111;
+    display: block;
+    border-radius: 1px;
+}
+.icon-minus-small { width: 8px; height: 2px; }
+.icon-plus-small { width: 8px; height: 2px; position: relative; }
+.icon-plus-small::after {
+    content: ''; position: absolute; top: -3px; left: 3px; width: 2px; height: 8px; background: #111; border-radius: 1px;
+}
+
+/* Linha divisória fina */
+.menu-divider {
+    border: 0;
+    border-top: 1px solid #5a5a5a;
+    margin: 8px 0;
+}
+
+/* Lista de Ferramentas */
+.tools-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Mais juntas */
+    margin-bottom: 12px;
+}
+
+.tool-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.tool-item i {
+    width: 18px; /* Limite de tamanho para os ícones */
+    display: flex;
+    justify-content: center;
+}
+
+.tool-text {
+    color: #cccccc;
+    font-size: 11px; /* Fonte menor */
+    text-decoration: underline;
+    text-decoration-color: #888;
+    text-underline-offset: 2px;
+}
+
+.tool-item:hover .tool-text {
+    color: #ffffff;
+}
+
+/* Controles de Câmera */
+.camera-controls {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+}
+
+.cam-btn {
+    width: 26px; /* Botões de câmera menores */
+    height: 26px;
+    background: #3a4235;
+    border: 1px solid #23291f;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 0 0 1px #4e5a47;
+}
+
+.cam-btn:hover {
+    background: #4a5444;
+}
+
+.cam-btn.center-cube {
+    width: 34px;
+    height: 28px;
+    position: relative;
+    top: -2px;
+}
+
+.arrow-left {
+    border: solid #5e6b55; border-width: 0 2px 2px 0; display: inline-block; padding: 3px; transform: rotate(135deg);
+}
+
+.arrow-right {
+    border: solid #5e6b55; border-width: 0 2px 2px 0; display: inline-block; padding: 3px; transform: rotate(-45deg);
+}

@@ -1,0 +1,150 @@
+.nitro-use-product-confirmation {
+    width: 350px;
+
+    .product-preview {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 122px;
+        height: 130px;
+        background: url('@/assets/images/room-widgets/avatar-info/preview-background.png') no-repeat center;
+
+        .pet-image {
+            width: 122px;
+            height: 130px;
+        }
+
+        .monsterplant-image {
+            width: 122px;
+            height: 130px;
+            background: url('@/assets/images/room-widgets/furni-context-menu/monsterplant-preview.png') no-repeat center;
+        }
+    }
+}
+
+.nitro-infostand-container {
+    position: absolute;
+    right: 10px;
+    bottom: $toolbar-height + 10px;
+    pointer-events: none;
+    z-index: $infostand-zindex;
+    color: $white;
+
+    .btn-dark {
+    font-family: Goldfish, sans-serif;
+    font-size: 12px;
+    background: #3d3d3d !important;
+    border: 1px solid #fff !important;
+    border-radius: 4px !important;
+    box-shadow: none;
+    outline: none;
+    height: 25px;
+}
+
+    .nitro-infostand {
+       position: relative;
+    min-width: 190px;
+    max-width: 190px;
+    z-index: 30;
+    pointer-events: auto;
+    background-color: #3d3d3d;
+    box-shadow: none !important;
+
+        .form-control-sm {
+            height: 25px;
+            min-height: 25px;
+            padding: 0.1rem 0.25rem;
+        }
+
+        .body-image {
+            display: flex;
+           align-items: center;
+    justify-content: center;
+    background-color: #656565;
+    border: 1px solid #181818;
+    width: 100%;
+    max-width: 68px;
+    border-radius: 5px;
+            border-radius: $border-radius;
+
+            &.pet {
+                max-width: 75px;
+            }
+
+            &.bot {
+                background-image: url('@/assets/images/infostand/bot_background.png');
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+
+            &.furni {
+                background-color: transparent;
+                margin-right: 0;
+            }
+        }
+
+        .body-image-plant {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 68px;
+            height: 85px;
+            max-height: 90px;
+            border-radius: $border-radius;
+        }
+
+        .badge-image {
+            width: 45px;
+            height: 45px;
+        }
+
+        .motto-content {
+            min-height: 18px;
+        }
+
+        .motto-input {
+            width: 100%;
+            height: 100%;
+            font-size: 12px;
+            padding: 0;
+            outline: 0;
+            border: 0;
+            color: rgba($white, 1);
+            position: relative;
+            background: transparent;
+            resize: none;
+            background-color: #656565;
+    border: 1px solid #181818;
+    border-radius: 5px;
+
+            &:focus {
+                font-style: italic;
+            }
+        }
+
+        .flex-tags
+        {
+            flex-wrap: wrap;
+            margin-bottom: -10px;
+
+            .text-tags
+            {
+                padding: 2px;
+                border-radius: 3px;
+                background: #333;
+                margin-right: 5px;
+                margin-bottom: 10px;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .button-container {
+        pointer-events: auto;
+    }
+
+    .pet-stats {
+        height: 18px;
+    }
+}
