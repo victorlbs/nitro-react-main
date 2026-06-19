@@ -1,50 +1,60 @@
-# Nitro React v2.1
+# Nitro React v4
 
-## Prerequisites
+## Pré-requisitos
 
--   [Git](https://git-scm.com/)
--   [NodeJS](https://nodejs.org/) >= 18
-    - If using NodeJS < 18 remove `--openssl-legacy-provider` from the package.json scripts
--   [Yarn](https://yarnpkg.com/) `npm i yarn -g`
+- [Git](https://git-scm.com/)
+- [NodeJS](https://nodejs.org/) >= 18
 
-## Installation
+- Se estiver usando NodeJS < 18, remova `--openssl-legacy-provider` dos scripts do package.json
+- [Yarn](https://yarnpkg.com/) `npm i yarn -g`
 
--   First you should open terminal and navigate to the folder where you want to clone Nitro
--   Clone Nitro
-    -   `git clone https://git.krews.org/nitro/nitro-react.git`
--   Install the dependencies
-    -   `yarn install`
-    -   This may take some time, please be patient
--   Rename a few files
-    -   Rename `public/renderer-config.json.example` to `public/renderer-config.json`
-    -   Rename `public/ui-config.json.example` to `public/ui-config.json`
--   Set your links
-    -   Open `public/renderer-config.json`
-        -   Update `socket.url, asset.url, image.library.url, & hof.furni.url`
-    -   Open `public/ui-config.json`
-        -   Update `camera.url, thumbnails.url, url.prefix, habbopages.url`
-    -   You can override any variable by passing it to `NitroConfig` in the index.html
+## Instalação
 
-## Usage
+- Primeiro, abra o terminal e navegue até a pasta onde deseja clonar o Nitro
+- Clone o Nitro
 
--   To use Nitro you need `.nitro` assets generated, see [nitro-converter](https://git.krews.org/nitro/nitro-converter) for instructions
--   See [Morningstar Websockets](https://git.krews.org/nitro/ms-websockets) for instructions on configuring websockets on your server
+- `git clone https://git.krews.org/nitro/nitro-react.git`
+- Instale as dependências
 
-### Development
+- `yarn install`
 
-Run Nitro in development mode when you are editing the files, this way you can see the changes in your browser instantly
+- Isso pode levar algum tempo, tenha paciência
+- Renomeie alguns arquivos
+
+- Renomeie `public/renderer-config.json.example` para `public/renderer-config.json`
+
+- Renomeie Substitua `public/ui-config.json.example` por `public/ui-config.json`
+- Defina seus links
+- Abra `public/renderer-config.json`
+
+- Atualize `socket.url`, `asset.url`, `image.library.url` e `hof.furni.url`
+
+- Abra `public/ui-config.json`
+
+- Atualize `camera.url`, `thumbnails.url`, `url.prefix` e `habbopages.url`
+
+- Você pode sobrescrever qualquer variável passando-a para `NitroConfig` no arquivo index.html
+
+## Uso
+
+- Para usar o Nitro, você precisa gerar arquivos `.nitro`. Consulte o [nitro-converter](https://git.krews.org/nitro/nitro-converter) para obter instruções.
+- Consulte o [Morningstar Websockets](https://git.krews.org/nitro/ms-websockets) para obter instruções de configuração. WebSockets no seu servidor
+
+### Desenvolvimento
+
+Execute o Nitro em modo de desenvolvimento ao editar os arquivos. Dessa forma, você poderá ver as alterações instantaneamente no seu navegador.
 
 ```
 yarn start
 ```
 
-### Production
+### Produção
 
-To build a production version of Nitro just run the following command
+Para criar uma versão de produção do Nitro, basta executar o seguinte comando:
 
 ```
 yarn build:prod
 ```
 
--   A `dist` folder will be generated, these are the files that must be uploaded to your webserver
--   Consult your CMS documentation for compatibility with Nitro and how to add the production files
+- Uma pasta `dist` será gerada. Esses são os arquivos que devem ser enviados para o seu servidor web.
+- Consulte a documentação do seu CMS para verificar a compatibilidade com o Nitro e como adicionar os arquivos de produção.
