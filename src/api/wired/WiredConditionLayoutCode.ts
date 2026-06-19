@@ -30,4 +30,8 @@ export class WiredConditionlayout
       public static VARIABLE_OTHER_ROOM: number = 122;
        public static EXECUTION_LIMIT: number = 124;
          public static USER_COUNT_IN_ROOM: number = 135;
+         public static DATE_MATCH: number = 3005;
+         public static SELECTOR_HABBOS_IN_GROUP = 802;
+         public static SELECTOR_HABBOS_BY_NAME = 803;
+         public static SELECTOR_ACTIONHABBO = 805;
 }

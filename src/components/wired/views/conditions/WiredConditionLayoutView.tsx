@@ -6,21 +6,21 @@ import { WiredConditionActorIsTeamMemberView } from './WiredConditionActorIsTeam
 import { WiredConditionActorIsWearingBadgeView } from './WiredConditionActorIsWearingBadgeView';
 import { WiredConditionActorIsWearingEffectView } from './WiredConditionActorIsWearingEffectView';
 import { WiredConditionCheckUserVariableView } from './WiredConditionCheckUserVariableView';
+import { WiredConditionDateMatchView } from './WiredConditionDateMatchView';
 import { WiredConditionDateRangeView } from './WiredConditionDateRangeView';
+import { WiredConditionExecutionLimitView } from './WiredConditionExecutionLimitView';
 import { WiredConditionFurniHasAvatarOnView } from './WiredConditionFurniHasAvatarOnView';
 import { WiredConditionFurniHasFurniOnView } from './WiredConditionFurniHasFurniOnView';
 import { WiredConditionFurniHasNotFurniOnView } from './WiredConditionFurniHasNotFurniOnView';
 import { WiredConditionFurniIsOfTypeView } from './WiredConditionFurniIsOfTypeView';
 import { WiredConditionFurniMatchesSnapshotView } from './WiredConditionFurniMatchesSnapshotView';
+import { WiredConditionSelectorHabbosGroupView } from './WiredConditionSelectorHabbosGroupView';
 import { WiredConditionTimeElapsedLessView } from './WiredConditionTimeElapsedLessView';
 import { WiredConditionTimeElapsedMoreView } from './WiredConditionTimeElapsedMoreView';
 import { WiredConditionUserCountInRoomView } from './WiredConditionUserCountInRoomView';
 import { WiredConditionVariableFromOtherRoomView } from './WiredConditionVariableFromOtherRoomView';
-import { WiredConditionExecutionLimitView } from './WiredConditionExecutionLimitView';
-
-
-
-
+import { WiredConditionSelectorHabbosByNameView } from './WiredConditionSelectorHabbosByNameView';
+import { WiredConditionHabboActionView } from './WiredConditionHabboActionView';
 
 export const WiredConditionLayoutView = (code: number) =>
 {
@@ -69,11 +69,20 @@ export const WiredConditionLayoutView = (code: number) =>
     return <WiredConditionVariableFromOtherRoomView />;
     case WiredConditionlayout.EXECUTION_LIMIT:
     return <WiredConditionExecutionLimitView />;
-    case WiredConditionLayout.USER_COUNT_IN: // que seria 31
+    case WiredConditionlayout.USER_COUNT_IN: // que seria 31
         return <WiredConditionUserCountInRoomView/>;
-      
+        case WiredConditionlayout.DATE_MATCH:
+    return <WiredConditionDateMatchView />;
+      case WiredConditionlayout.SELECTOR_HABBOS_IN_GROUP:
+    return <WiredConditionSelectorHabbosGroupView />;
      case WiredConditionlayout.CHECK_USER_VARIABLE:
     return <WiredConditionCheckUserVariableView />;
+    case WiredConditionlayout.SELECTOR_HABBOS_BY_NAME:
+    return <WiredConditionSelectorHabbosByNameView />;
+
+       case WiredConditionlayout.SELECTOR_ACTIONHABBO:
+    return <WiredConditionHabboActionView />;
+    
     }
 
 

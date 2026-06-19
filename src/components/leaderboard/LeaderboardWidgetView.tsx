@@ -12,7 +12,7 @@ const MOCK_LEADERBOARD = [
     { rank: 7, name: 'ferrazmatheus', figure: 'hr-165-45.hd-180-2.ch-215-92.lg-275-92.sh-290-92', score: 5810 },
     { rank: 8, name: 'enecifran', figure: 'hr-828-45.hd-180-1.ch-210-92.lg-270-82.sh-118-68', score: 5804 },
     { rank: 9, name: 'Hyana_', figure: 'hr-3163-1035.hd-600-1.ch-3215-92.lg-3216-82.sh-3115-92', score: 5737 },
-    { rank: 10, name: 'Weber', figure: 'hr-115-42.hd-195-19.ch-3030-82.lg-275-1408.sh-290-92', score: 5693 }
+    { rank: 10, name: '', figure: 'hr-115-42.hd-195-19.ch-3030-82.lg-275-1408.sh-290-92', score: 5693 }
 ];
 
 const CURRENT_USER_MOCK = { rank: '--', name: ':Vitrond', figure: 'hr-893-45.hd-180-1.ch-210-66.lg-270-82.sh-118-68', score: 405 };
@@ -78,7 +78,6 @@ export const LeaderboardWidgetView: FC<LeaderboardWidgetViewProps> = props => {
                     <button className="btn-page disabled"><FaChevronLeft /> Anterior</button>
                     <button className="btn-page">Próximo <FaChevronRight /></button>
                 </div>
-
             </NitroCardContentView>
         </NitroCardView>
     );

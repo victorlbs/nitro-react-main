@@ -14,6 +14,7 @@ import { WiredTriggerGameStartsView } from './WiredTriggerGameStartsView';
 import { WiredTriggeScoreAchievedView } from './WiredTriggerScoreAchievedView';
 import { WiredTriggerToggleFurniView } from './WiredTriggerToggleFurniView';
 import { WiredTriggerUserClicksUserView } from './WiredTriggerUserClicksUserView';
+import { WiredTriggerTempoExatoView } from './WiredTriggerTempoExatoView';
 export const WiredTriggerLayoutView = (code: number) =>
 {
     switch(code)
@@ -48,6 +49,8 @@ export const WiredTriggerLayoutView = (code: number) =>
             return <WiredTriggerToggleFurniView />;
             case WiredTriggerLayout.USER_CLICKS_USER:
         return <WiredTriggerUserClicksUserView />;
+        case WiredTriggerLayout.TEMPO_EXATO:
+            return <WiredTriggerTempoExatoView />;
     }
 
     return null;
