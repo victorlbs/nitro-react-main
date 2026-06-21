@@ -1,115 +1,76 @@
 import { FC, useEffect, useState } from 'react';
-import { useWired } from '../../../../hooks/wired';
+import ReactSlider from 'react-slider';
+import { WiredFurniType } from '../../../../api';
+import { Column, Flex, Text } from '../../../../common';
+import { useWired } from '../../../../hooks';
 import { WiredActionBaseView } from './WiredActionBaseView';
 
-const TARGET_SCOPES = [
-    "Use o usuário acionador",
-    "Use o quarto atual",
-    "Use o mobi acionado"
-];
+/**
+ * React view for the "Dar Variável" wired effect. This component allows
+ * creators to specify a variable name, choose whether to overwrite existing
+ * values, set an initial value and decide whether the variable should be
+ * attached to the triggering user or to selected furniture items. When
+ * saved the values are transmitted via setStringParam and setIntParams.
+ */
+export const WiredActionGiveVariableView: FC<{}> = props =>
+{
+    const [ variableName, setVariableName ] = useState('');
+    const [ replaceExisting, setReplaceExisting ] = useState(false);
+    const [ initialValue, setInitialValue ] = useState(0);
+    const [ targetType, setTargetType ] = useState(0);
 
-export const WiredActionGiveVariableView: FC = () => {
-    const { trigger, setStringParam, setIntParams } = useWired();
-    const [variableName, setVariableName] = useState<string>('');
-    const [initialValue, setInitialValue] = useState<number>(0);
-    const [replaceExisting, setReplaceExisting] = useState<boolean>(false);
-    const [targetScope, setTargetScope] = useState<number>(0);
+    const { trigger = null, setStringParam = null, setIntParams = null } = useWired();
 
-    useEffect(() => {
-        if (!trigger) return;
-
+    useEffect(() =>
+    {
+        // Load existing wired configuration when editing a saved effect
+        if(!trigger) return;
+        // stringData holds the variable name
         setVariableName(trigger.stringData || '');
+        // intData[0] = replaceExisting flag (0/1)
+        setReplaceExisting((trigger.intData && trigger.intData.length > 0) ? (trigger.intData[0] === 1) : false);
+        // intData[1] = initial value
+        setInitialValue((trigger.intData && trigger.intData.length > 1) ? trigger.intData[1] : 0);
+        // intData[2] = target type
+        setTargetType((trigger.intData && trigger.intData.length > 2) ? trigger.intData[2] : 0);
+    }, [ trigger ]);
 
-        if (trigger.intData && trigger.intData.length >= 3) {
-            setInitialValue(trigger.intData[0]);
-            setReplaceExisting(trigger.intData[1] === 1);
-            setTargetScope(trigger.intData[2]);
-        } else {
-            setInitialValue(0);
-            setReplaceExisting(false);
-            setTargetScope(0);
-        }
-    }, [trigger]);
-
-    const updateStringData = (val: string) => {
-        setVariableName(val);
-        if (setStringParam) setStringParam(val);
-    };
-
-    const updateIntData = (initVal: number, replace: boolean, scope: number) => {
-        setInitialValue(initVal);
-        setReplaceExisting(replace);
-        setTargetScope(scope);
-        if (setIntParams) setIntParams([initVal, replace ? 1 : 0, scope]);
-    };
-
-    const nextScope = () => {
-        const next = (targetScope + 1) % TARGET_SCOPES.length;
-        updateIntData(initialValue, replaceExisting, next);
-    };
-
-    const prevScope = () => {
-        const prev = targetScope === 0 ? TARGET_SCOPES.length - 1 : targetScope - 1;
-        updateIntData(initialValue, replaceExisting, prev);
-    };
+    const save = () =>
+    {
+        if(setStringParam) setStringParam(variableName);
+        if(setIntParams) setIntParams([ replaceExisting ? 1 : 0, initialValue, targetType ]);
+    }
 
     return (
-        <WiredActionBaseView requiresFurni={0} hasSpecialInput={true} hasDelay={true}>
-            <div className="d-flex flex-column gap-2">
-                
-                <div className="d-flex flex-column gap-1">
-                    <span className="fw-bold" style={{ fontSize: '13px' }}>Selecione uma variável:</span>
-                    <input 
-                        type="text" 
-                        className="form-control form-control-sm" 
-                        placeholder="Buscar uma variável"
-                        value={variableName} 
-                        onChange={(e) => updateStringData(e.target.value)} 
-                    />
-                </div>
-
-                <div className="form-check">
-                    <input 
-                        className="form-check-input" 
-                        type="checkbox" 
-                        id="replaceVariableCheckbox" 
-                        checked={replaceExisting} 
-                        onChange={(e) => updateIntData(initialValue, e.target.checked, targetScope)} 
-                    />
-                    <label className="form-check-label" htmlFor="replaceVariableCheckbox" style={{ fontSize: '13px' }}>
-                        Substituir variável existente
-                    </label>
-                </div>
-
-                <hr className="m-0 border-secondary opacity-50" />
-
-                <div className="d-flex flex-column gap-1">
-                    <span className="fw-bold" style={{ fontSize: '13px' }}>Opções de valor</span>
-                    <div className="d-flex align-items-center gap-2">
-                        <span style={{ fontSize: '13px' }}>Valor inicial:</span>
-                        <input 
-                            type="number" 
-                            className="form-control form-control-sm w-50" 
-                            value={initialValue} 
-                            onChange={(e) => updateIntData(parseInt(e.target.value) || 0, replaceExisting, targetScope)} 
-                        />
-                    </div>
-                </div>
-
-                <hr className="m-0 border-secondary opacity-50" />
-
-                {/* O slider de delay é injetado automaticamente pelo hasDelay={true} no WiredActionBaseView. Abaixo criamos apenas o escopo final */}
-
-                <div className="d-flex flex-column gap-1 mt-2">
-                    <span className="fw-bold" style={{ fontSize: '13px' }}>Variável de destino:</span>
-                    <div className="d-flex align-items-center justify-content-between bg-light p-1 rounded border">
-                        <i className="icon icon-arrow-left cursor-pointer" onClick={prevScope} />
-                        <span style={{ fontSize: '13px' }}>{TARGET_SCOPES[targetScope]}</span>
-                        <i className="icon icon-arrow-right cursor-pointer" onClick={nextScope} />
-                    </div>
-                </div>
-
-            </div>
+        <WiredActionBaseView requiresFurni={ WiredFurniType.STUFF_SELECTION_OPTION_BY_ID } hasSpecialInput={ true } save={ save }>
+            <Column gap={ 1 }>
+                <Text bold>Variável</Text>
+                <input type="text" className="form-control form-control-sm" value={ variableName } onChange={ e => setVariableName(e.target.value) } placeholder="Nome da variável" />
+                <Flex alignItems="center" gap={ 1 }>
+                    <input className="form-check-input" type="checkbox" checked={ replaceExisting } onChange={ e => setReplaceExisting(e.target.checked) } />
+                    <Text>Substituir variável existente</Text>
+                </Flex>
+                <Text bold>Valor inicial</Text>
+                <ReactSlider
+                    className={ 'nitro-slider' }
+                    min={ -1000 }
+                    max={ 1000 }
+                    value={ initialValue }
+                    onChange={ (value: number) => setInitialValue(value) }
+                />
+                <input type="number" className="form-control form-control-sm" value={ initialValue } onChange={ e => setInitialValue(Number(e.target.value)) } />
+                <Text bold>Variável de destino</Text>
+                <Flex gap={ 1 }>
+                    <Flex alignItems="center" gap={ 1 }>
+                        <input className="form-check-input" type="radio" id="targetUser" name="variableTarget" value={ 0 } checked={ targetType === 0 } onChange={ () => setTargetType(0) } />
+                        <Text htmlFor="targetUser">Usuário acionador</Text>
+                    </Flex>
+                    <Flex alignItems="center" gap={ 1 }>
+                        <input className="form-check-input" type="radio" id="targetFurni" name="variableTarget" value={ 1 } checked={ targetType === 1 } onChange={ () => setTargetType(1) } />
+                        <Text htmlFor="targetFurni">Mobi(s) selecionado(s)</Text>
+                    </Flex>
+                </Flex>
+            </Column>
         </WiredActionBaseView>
     );
-};
+}

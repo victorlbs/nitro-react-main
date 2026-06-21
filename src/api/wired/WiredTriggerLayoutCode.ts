@@ -16,4 +16,5 @@ export class WiredTriggerLayout
     public static BOT_REACHED_AVATAR: number = 14;
     public static USER_CLICKS_USER: number = 110;
       public static TEMPO_EXATO: number = 578;
+       public static COUNTER_TIME: number = 15;
 }

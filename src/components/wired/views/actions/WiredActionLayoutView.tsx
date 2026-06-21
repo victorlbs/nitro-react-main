@@ -13,7 +13,7 @@ import { WiredActionFleeView } from './WiredActionFleeView';
 import { WiredActionGiveRewardView } from './WiredActionGiveRewardView';
 import { WiredActionGiveScoreToPredefinedTeamView } from './WiredActionGiveScoreToPredefinedTeamView';
 import { WiredActionGiveScoreView } from './WiredActionGiveScoreView';
-
+import { WiredActionGiveVariableView } from './WiredActionGiveVariableView';
 import { WiredActionJoinTeamView } from './WiredActionJoinTeamView';
 import { WiredActionKickFromRoomView } from './WiredActionKickFromRoomView';
 import { WiredActionLeaveTeamView } from './WiredActionLeaveTeamView';
@@ -24,6 +24,7 @@ import { WiredActionMoveFurniToView } from './WiredActionMoveFurniToView';
 import { WiredActionMoveFurniView } from './WiredActionMoveFurniView';
 import { WiredActionMuteUserView } from './WiredActionMuteUserView';
 import { WiredActionResetView } from './WiredActionResetView';
+import { WiredActionSendSignalView } from './WiredActionSendSignalView';
 import { WiredActionSetFurniStateToView } from './WiredActionSetFurniStateToView';
 import { WiredActionTeleportView } from './WiredActionTeleportView';
 import { WiredActionToggleFurniStateView } from './WiredActionToggleFurniStateView';
@@ -76,6 +77,7 @@ export const WiredActionLayoutView = (code: number) =>
             return <WiredActionMuteUserView />;
         case WiredActionLayoutCode.RESET:
             return <WiredActionResetView />;
+            
         case WiredActionLayoutCode.SET_FURNI_STATE:
             return <WiredActionSetFurniStateToView />;
         case WiredActionLayoutCode.TELEPORT:
@@ -90,6 +92,11 @@ export const WiredActionLayoutView = (code: number) =>
        return <WiredActionUserVariableView/>;
        case WiredActionLayoutCode.GIVE_VARIABLE:
     return <WiredActionGiveVariableView />;
+
+       case WiredActionLayoutCode.SEND_SIGNAL:
+            return <WiredActionSendSignalView />;
+ 
+    
             
     }
 

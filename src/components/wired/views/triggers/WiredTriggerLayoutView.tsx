@@ -6,15 +6,16 @@ import { WiredTriggerAvatarWalksOnFurniView } from './WiredTriggerAvatarWalksOnF
 import { WiredTriggerBotReachedAvatarView } from './WiredTriggerBotReachedAvatarView';
 import { WiredTriggerBotReachedStuffView } from './WiredTriggerBotReachedStuffView';
 import { WiredTriggerCollisionView } from './WiredTriggerCollisionView';
+import { WiredTriggerCounterTimeView } from './WiredTriggerCounterTimeView';
 import { WiredTriggeExecuteOnceView } from './WiredTriggerExecuteOnceView';
 import { WiredTriggeExecutePeriodicallyLongView } from './WiredTriggerExecutePeriodicallyLongView';
 import { WiredTriggeExecutePeriodicallyView } from './WiredTriggerExecutePeriodicallyView';
 import { WiredTriggerGameEndsView } from './WiredTriggerGameEndsView';
 import { WiredTriggerGameStartsView } from './WiredTriggerGameStartsView';
 import { WiredTriggeScoreAchievedView } from './WiredTriggerScoreAchievedView';
+import { WiredTriggerTempoExatoView } from './WiredTriggerTempoExatoView';
 import { WiredTriggerToggleFurniView } from './WiredTriggerToggleFurniView';
 import { WiredTriggerUserClicksUserView } from './WiredTriggerUserClicksUserView';
-import { WiredTriggerTempoExatoView } from './WiredTriggerTempoExatoView';
 export const WiredTriggerLayoutView = (code: number) =>
 {
     switch(code)
@@ -51,6 +52,8 @@ export const WiredTriggerLayoutView = (code: number) =>
         return <WiredTriggerUserClicksUserView />;
         case WiredTriggerLayout.TEMPO_EXATO:
             return <WiredTriggerTempoExatoView />;
+            case WiredTriggerLayout.COUNTER_TIME:
+            return <WiredTriggerCounterTimeView />;
     }
 
     return null;

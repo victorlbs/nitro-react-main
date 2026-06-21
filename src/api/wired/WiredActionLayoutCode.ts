@@ -30,5 +30,6 @@ export class WiredActionLayoutCode
      public static ACTION_MOVE_FURNI_GROUP: number = 99998;
      public static ACTION_LOG_MESSAGE: number = 99996;
      public static SET_USER_VARIABLE = 120;
-     public static GIVE_VARIABLE = 123;
+     public static GIVE_VARIABLE = 102;
+            public static SEND_SIGNAL: number = 83;
 }

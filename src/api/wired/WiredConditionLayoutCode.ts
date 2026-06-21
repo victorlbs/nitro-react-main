@@ -34,4 +34,10 @@ export class WiredConditionlayout
          public static SELECTOR_HABBOS_IN_GROUP = 802;
          public static SELECTOR_HABBOS_BY_NAME = 803;
          public static SELECTOR_ACTIONHABBO = 805;
+             public static TIME_COINCIDE: number = 32;
+              public static FURNI_IN_AREA: number = 33;
+               public static TEAM_SCORE_COMPARE: number = 34;
+               public static ACTOR_DIRECTION_MULTI: number = 35;
+               public static SELECT_QUANTITY: number = 36;
+
 }
