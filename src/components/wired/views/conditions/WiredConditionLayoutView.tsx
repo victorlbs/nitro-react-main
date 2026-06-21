@@ -5,6 +5,7 @@ import { WiredConditionActorIsOnFurniView } from './WiredConditionActorIsOnFurni
 import { WiredConditionActorIsTeamMemberView } from './WiredConditionActorIsTeamMemberView';
 import { WiredConditionActorIsWearingBadgeView } from './WiredConditionActorIsWearingBadgeView';
 import { WiredConditionActorIsWearingEffectView } from './WiredConditionActorIsWearingEffectView';
+import { WiredConditionDateMatchView } from './WiredConditionDateMatchView';
 import { WiredConditionDateRangeView } from './WiredConditionDateRangeView';
 import { WiredConditionFurniHasAvatarOnView } from './WiredConditionFurniHasAvatarOnView';
 import { WiredConditionFurniHasFurniOnView } from './WiredConditionFurniHasFurniOnView';
@@ -13,13 +14,15 @@ import { WiredConditionFurniInAreaView } from './WiredConditionFurniInAreaView';
 import { WiredConditionFurniIsOfTypeView } from './WiredConditionFurniIsOfTypeView';
 import { WiredConditionFurniMatchesSnapshotView } from './WiredConditionFurniMatchesSnapshotView';
 import { WiredConditionHabboDirectionMultiView } from './WiredConditionHabboDirectionMultiView';
+import { WiredConditionSelectorHabbosByNameView } from './WiredConditionSelectorHabbosByNameView';
+import { WiredConditionSelectorHabbosGroupView } from './WiredConditionSelectorHabbosGroupView';
 import { WiredConditionSelectQuantityView } from './WiredConditionSelectQuantityView';
 import { WiredConditionTeamScoreCompareView } from './WiredConditionTeamScoreCompareView';
 import { WiredConditionTimeCoincideView } from './WiredConditionTimeCoincideView';
 import { WiredConditionTimeElapsedLessView } from './WiredConditionTimeElapsedLessView';
 import { WiredConditionTimeElapsedMoreView } from './WiredConditionTimeElapsedMoreView';
 import { WiredConditionUserCountInRoomView } from './WiredConditionUserCountInRoomView';
-
+import { WiredConditionVariableFromOtherRoomView } from './WiredConditionVariableFromOtherRoomView';
 
 export const WiredConditionLayoutView = (code: number) =>
 {
@@ -64,6 +67,26 @@ export const WiredConditionLayoutView = (code: number) =>
         case WiredConditionlayout.USER_COUNT_IN:
         case WiredConditionlayout.NOT_USER_COUNT_IN:
             return <WiredConditionUserCountInRoomView />;
+            
+
+                 case WiredConditionlayout.SELECTOR_HABBOS_BY_NAME:
+            return <WiredConditionSelectorHabbosByNameView />;
+               case WiredConditionlayout.SELECTOR_HABBOS_IN_GROUP:
+            return <WiredConditionSelectorHabbosGroupView />;
+
+                case WiredConditionlayout.VARIABLE_OTHER_ROOM:
+            return <WiredConditionVariableFromOtherRoomView />;
+
+                            case WiredConditionlayout.DATE_MATCH:
+            return <WiredConditionDateMatchView />;
+
+                  case WiredConditionlayout.USER_COUNT_IN_ROOM:
+            return <WiredConditionUserCountInRoomView />;
+
+            //DATE_MATCH USER_COUNT_IN_ROOM
+
+          
+
 
         // Custom wired condition: time coincidence
         case WiredConditionlayout.TIME_COINCIDE:
