@@ -24,6 +24,9 @@ import { WiredConditionTimeElapsedLessView } from './WiredConditionTimeElapsedLe
 import { WiredConditionTimeElapsedMoreView } from './WiredConditionTimeElapsedMoreView';
 import { WiredConditionUserCountInRoomView } from './WiredConditionUserCountInRoomView';
 import { WiredConditionVariableFromOtherRoomView } from './WiredConditionVariableFromOtherRoomView';
+import { WiredConditionHabboOnFurniView } from './WiredConditionHabboOnFurniView';
+import { WiredConditionFurniInNeighbourhoodView } from './WiredConditionFurniInNeighbourhoodView';
+
 
 export const WiredConditionLayoutView = (code: number) =>
 {
@@ -87,7 +90,11 @@ export const WiredConditionLayoutView = (code: number) =>
               case WiredConditionlayout.FURNI_HEIGHT_COMPARE:
             return <WiredConditionFurniHeightCompareView />;
 
-          
+                case WiredConditionlayout.HABBO_ON_FURNI:
+            return <WiredConditionHabboOnFurniView />;
+
+           case WiredConditionlayout.FURNI_IN_NEIGHBOURHOOD:
+            return <WiredConditionFurniInNeighbourhoodView />;
 
 
         // Custom wired condition: time coincidence
