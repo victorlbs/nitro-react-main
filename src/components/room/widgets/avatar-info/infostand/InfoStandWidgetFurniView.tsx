@@ -5,6 +5,8 @@ import { AvatarInfoFurni, CreateLinkEvent, GetGroupInformation, GetNitroInstance
 import { Base, Button, Column, Flex, LayoutBadgeImageView, LayoutLimitedEditionCompactPlateView, LayoutRarityLevelView, Text, UserProfileIconView } from '../../../../../common';
 import { useMessageEvent, useRoom, useSoundEvent } from '../../../../../hooks';
 
+
+
 interface InfoStandWidgetFurniViewProps {
     avatarInfo: AvatarInfoFurni;
     onClose: () => void;
@@ -311,6 +313,9 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
             </Column>
             <Flex gap={ 1 } justifyContent="end">
                 { canMove && <Button variant="dark" onClick={ event => processButtonAction('move') }>{ LocalizeText('infostand.button.move') }</Button> }
+
+                
+         
                 { canRotate && <Button variant="dark" onClick={ event => processButtonAction('rotate') }>{ LocalizeText('infostand.button.rotate') }</Button> }
                 { (pickupMode !== PICKUP_MODE_NONE) && <Button variant="dark" onClick={ event => processButtonAction('pickup') }>{ LocalizeText((pickupMode === PICKUP_MODE_EJECT) ? 'infostand.button.eject' : 'infostand.button.pickup') }</Button> }
                 { canUse && <Button variant="dark" onClick={ event => processButtonAction('use') }>{ LocalizeText('infostand.button.use') }</Button> }

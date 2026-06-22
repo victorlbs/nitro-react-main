@@ -26,18 +26,19 @@ export class WiredConditionlayout
     public static NOT_ACTOR_WEARING_EFFECT: number = 23;
     public static DATE_RANGE_ACTIVE: number = 24;
     public static ACTOR_HAS_HANDITEM: number = 25;
-     public static CHECK_USER_VARIABLE: number = 103;
-      public static VARIABLE_OTHER_ROOM: number = 122;
-       public static EXECUTION_LIMIT: number = 124;
-         public static USER_COUNT_IN_ROOM: number = 135;
-         public static DATE_MATCH: number = 3005;
-         public static SELECTOR_HABBOS_IN_GROUP = 802;
-         public static SELECTOR_HABBOS_BY_NAME = 803;
-         public static SELECTOR_ACTIONHABBO = 805;
-             public static TIME_COINCIDE: number = 32;
-              public static FURNI_IN_AREA: number = 33;
-               public static TEAM_SCORE_COMPARE: number = 34;
-               public static ACTOR_DIRECTION_MULTI: number = 35;
-               public static SELECT_QUANTITY: number = 36;
+    public static CHECK_USER_VARIABLE: number = 103;
+    public static VARIABLE_OTHER_ROOM: number = 122;
+    public static EXECUTION_LIMIT: number = 124;
+    public static USER_COUNT_IN_ROOM: number = 135;
+    public static DATE_MATCH: number = 3005;
+    public static SELECTOR_HABBOS_IN_GROUP = 802;
+    public static SELECTOR_HABBOS_BY_NAME = 803;
+    public static SELECTOR_ACTIONHABBO = 805;
+    public static TIME_COINCIDE: number = 32;
+    public static FURNI_IN_AREA: number = 33;
+    public static TEAM_SCORE_COMPARE: number = 34;
+    public static ACTOR_DIRECTION_MULTI: number = 35;
+    public static SELECT_QUANTITY: number = 36;
+    public static FURNI_HEIGHT_COMPARE: number = 37;
 
 }

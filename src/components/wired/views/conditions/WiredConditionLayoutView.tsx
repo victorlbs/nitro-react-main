@@ -10,6 +10,7 @@ import { WiredConditionDateRangeView } from './WiredConditionDateRangeView';
 import { WiredConditionFurniHasAvatarOnView } from './WiredConditionFurniHasAvatarOnView';
 import { WiredConditionFurniHasFurniOnView } from './WiredConditionFurniHasFurniOnView';
 import { WiredConditionFurniHasNotFurniOnView } from './WiredConditionFurniHasNotFurniOnView';
+import { WiredConditionFurniHeightCompareView } from './WiredConditionFurniHeightCompareView';
 import { WiredConditionFurniInAreaView } from './WiredConditionFurniInAreaView';
 import { WiredConditionFurniIsOfTypeView } from './WiredConditionFurniIsOfTypeView';
 import { WiredConditionFurniMatchesSnapshotView } from './WiredConditionFurniMatchesSnapshotView';
@@ -83,7 +84,8 @@ export const WiredConditionLayoutView = (code: number) =>
                   case WiredConditionlayout.USER_COUNT_IN_ROOM:
             return <WiredConditionUserCountInRoomView />;
 
-            //DATE_MATCH USER_COUNT_IN_ROOM
+              case WiredConditionlayout.FURNI_HEIGHT_COMPARE:
+            return <WiredConditionFurniHeightCompareView />;
 
           
 
