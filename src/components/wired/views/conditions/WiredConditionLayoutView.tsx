@@ -5,6 +5,7 @@ import { WiredConditionActorIsOnFurniView } from './WiredConditionActorIsOnFurni
 import { WiredConditionActorIsTeamMemberView } from './WiredConditionActorIsTeamMemberView';
 import { WiredConditionActorIsWearingBadgeView } from './WiredConditionActorIsWearingBadgeView';
 import { WiredConditionActorIsWearingEffectView } from './WiredConditionActorIsWearingEffectView';
+import { WiredConditionCanPerformMovementsView } from './WiredConditionCanPerformMovementsView';
 import { WiredConditionDateMatchView } from './WiredConditionDateMatchView';
 import { WiredConditionDateRangeView } from './WiredConditionDateRangeView';
 import { WiredConditionFurniHasAvatarOnView } from './WiredConditionFurniHasAvatarOnView';
@@ -12,9 +13,11 @@ import { WiredConditionFurniHasFurniOnView } from './WiredConditionFurniHasFurni
 import { WiredConditionFurniHasNotFurniOnView } from './WiredConditionFurniHasNotFurniOnView';
 import { WiredConditionFurniHeightCompareView } from './WiredConditionFurniHeightCompareView';
 import { WiredConditionFurniInAreaView } from './WiredConditionFurniInAreaView';
+import { WiredConditionFurniInNeighbourhoodView } from './WiredConditionFurniInNeighbourhoodView';
 import { WiredConditionFurniIsOfTypeView } from './WiredConditionFurniIsOfTypeView';
 import { WiredConditionFurniMatchesSnapshotView } from './WiredConditionFurniMatchesSnapshotView';
 import { WiredConditionHabboDirectionMultiView } from './WiredConditionHabboDirectionMultiView';
+import { WiredConditionHabboOnFurniView } from './WiredConditionHabboOnFurniView';
 import { WiredConditionSelectorHabbosByNameView } from './WiredConditionSelectorHabbosByNameView';
 import { WiredConditionSelectorHabbosGroupView } from './WiredConditionSelectorHabbosGroupView';
 import { WiredConditionSelectQuantityView } from './WiredConditionSelectQuantityView';
@@ -24,8 +27,7 @@ import { WiredConditionTimeElapsedLessView } from './WiredConditionTimeElapsedLe
 import { WiredConditionTimeElapsedMoreView } from './WiredConditionTimeElapsedMoreView';
 import { WiredConditionUserCountInRoomView } from './WiredConditionUserCountInRoomView';
 import { WiredConditionVariableFromOtherRoomView } from './WiredConditionVariableFromOtherRoomView';
-import { WiredConditionHabboOnFurniView } from './WiredConditionHabboOnFurniView';
-import { WiredConditionFurniInNeighbourhoodView } from './WiredConditionFurniInNeighbourhoodView';
+import { WiredConditionTeamIsWinningView } from './WiredConditionTeamIsWinningView';
 
 
 export const WiredConditionLayoutView = (code: number) =>
@@ -93,9 +95,13 @@ export const WiredConditionLayoutView = (code: number) =>
                 case WiredConditionlayout.HABBO_ON_FURNI:
             return <WiredConditionHabboOnFurniView />;
 
+                 case WiredConditionlayout.TEAM_IS_WINNING:
+            return <WiredConditionTeamIsWinningView />;
+
            case WiredConditionlayout.FURNI_IN_NEIGHBOURHOOD:
             return <WiredConditionFurniInNeighbourhoodView />;
-
+  case WiredConditionlayout.CAN_PERFORM_MOVEMENTS:
+            return <WiredConditionCanPerformMovementsView />;
 
         // Custom wired condition: time coincidence
         case WiredConditionlayout.TIME_COINCIDE:

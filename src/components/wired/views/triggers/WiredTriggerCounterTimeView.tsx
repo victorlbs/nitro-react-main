@@ -1,93 +1,103 @@
 import { FC, useEffect, useState } from 'react';
+import ReactSlider from 'react-slider';
 import { WiredFurniType } from '../../../../api';
-import { Column, Flex, Text } from '../../../../common';
+import { Column, Text } from '../../../../common';
 import { useWired } from '../../../../hooks';
 import { WiredTriggerBaseView } from './WiredTriggerBaseView';
 
-/**
- * React view for the custom wired trigger that activates when a selected game timer
- * (cronômetro) reaches a chosen amount of time (minutes and seconds). The user
- * may select up to 20 timer furniture and optionally decide whether the trigger
- * should apply to any timer ("Qualquer mobi") or only to those selected in the
- * editor ("Apenas mobis selecionados"). Advanced options can be toggled via a
- * link to keep the UI compact by default.
- */
+const MAX_MINUTES = 99;
+const MAX_SECONDS = 59;
+
+const clamp = (value: number, min: number, max: number): number => Math.max(min, Math.min(max, value));
+
 export const WiredTriggerCounterTimeView: FC<{}> = () =>
 {
-    // Local state for minutes and seconds
     const [ minutes, setMinutes ] = useState(0);
     const [ seconds, setSeconds ] = useState(0);
-    // Selection mode: 0 = only selected timers, 1 = any timer in the room
     const [ selectionMode, setSelectionMode ] = useState(0);
-    // Whether to display advanced configuration options
     const [ showAdvanced, setShowAdvanced ] = useState(false);
 
     const { trigger = null, setIntParams = null } = useWired();
 
-    // When editing an existing wired, pre-fill the values from the stored intData
     useEffect(() =>
     {
-        if (!trigger) return;
-        const data = trigger.intData;
-        if (Array.isArray(data) && data.length >= 2)
+        if(!trigger) return;
+
+        if(trigger.intData && trigger.intData.length >= 2)
         {
-            setMinutes(parseInt(data[0]) || 0);
-            setSeconds(parseInt(data[1]) || 0);
-            if (data.length >= 3) setSelectionMode(parseInt(data[2]) || 0);
+            setMinutes(clamp(Number(trigger.intData[0]) || 0, 0, MAX_MINUTES));
+            setSeconds(clamp(Number(trigger.intData[1]) || 0, 0, MAX_SECONDS));
+            setSelectionMode((trigger.intData.length >= 3 && Number(trigger.intData[2]) === 1) ? 1 : 0);
+        }
+        else
+        {
+            setMinutes(0);
+            setSeconds(0);
+            setSelectionMode(0);
         }
     }, [ trigger ]);
 
-    // Save function commits the configuration back to the emulator
     const save = () =>
     {
-        if (setIntParams)
-        {
-            setIntParams([
-                minutes,
-                seconds,
-                selectionMode
-            ]);
-        }
+        if(setIntParams) setIntParams([
+            clamp(minutes, 0, MAX_MINUTES),
+            clamp(seconds, 0, MAX_SECONDS),
+            selectionMode === 1 ? 1 : 0
+        ]);
     };
 
-    // Helper to constrain a numeric value between min and max
-    const clamp = (value: number, min: number, max: number): number => Math.max(min, Math.min(max, value));
-
     return (
-        <WiredTriggerBaseView hasSpecialInput={ true } requiresFurni={ WiredFurniType.STUFF_SELECTION_OPTION_BY_ID } save={ save }>
+        <WiredTriggerBaseView
+            hasSpecialInput={ true }
+            requiresFurni={ WiredFurniType.STUFF_SELECTION_OPTION_BY_ID }
+            save={ save }>
             <Column gap={ 2 }>
-                {/* Time selection */}
                 <Column gap={ 1 }>
-                    <Text bold>Tempo escolhido</Text>
-                    <Flex alignItems="center" gap={ 1 }>
-                        <Text>Minutos:</Text>
-                        <input type="number" min={ 0 } max={ 59 } value={ minutes } onChange={ e => setMinutes(clamp(parseInt(e.target.value) || 0, 0, 59)) } style={{ width: '60px' }} />
-                    </Flex>
-                    <Flex alignItems="center" gap={ 1 }>
-                        <Text>Segundos:</Text>
-                        <input type="number" min={ 0 } max={ 59 } value={ seconds } onChange={ e => setSeconds(clamp(parseInt(e.target.value) || 0, 0, 59)) } style={{ width: '60px' }} />
-                    </Flex>
+                    <Text bold>Passaram { minutes } minuto{ minutes === 1 ? '' : 's' }</Text>
+                    <ReactSlider
+                        min={ 0 }
+                        max={ MAX_MINUTES }
+                        value={ minutes }
+                        className="nitro-slider"
+                        thumbClassName="thumb"
+                        trackClassName="track"
+                        onChange={ event => setMinutes(clamp(Number(event) || 0, 0, MAX_MINUTES)) } />
                 </Column>
 
-                {/* Link to toggle advanced options */}
-                <Text className="text-primary" style={{ cursor: 'pointer', textDecoration: 'underline' }} onClick={ () => setShowAdvanced(prev => !prev) }>
+                <Column gap={ 1 }>
+                    <Text bold>passaram { seconds } segundo{ seconds === 1 ? '' : 's' }</Text>
+                    <ReactSlider
+                        min={ 0 }
+                        max={ MAX_SECONDS }
+                        value={ seconds }
+                        className="nitro-slider"
+                        thumbClassName="thumb"
+                        trackClassName="track"
+                        onChange={ event => setSeconds(clamp(Number(event) || 0, 0, MAX_SECONDS)) } />
+                </Column>
+
+                <Text small className="text-muted">
+                    Selecione o cronômetro do jogo. O wired dispara quando esse cronômetro chegar exatamente nesse tempo.
+                </Text>
+
+                <Text
+                    className="text-primary"
+                    style={{ cursor: 'pointer', textDecoration: 'underline' }}
+                    onClick={ () => setShowAdvanced(value => !value) }>
                     { showAdvanced ? 'Ocultar configurações avançadas' : 'Mostrar configurações avançadas' }
                 </Text>
 
-                {/* Advanced configuration: selection mode */}
-                { showAdvanced && (
+                { showAdvanced &&
                     <Column gap={ 1 }>
                         <Text bold>Modo de seleção</Text>
-                        <Flex alignItems="center" gap={ 1 }>
-                            <input type="radio" id="selection-only" name="selectionMode" checked={ selectionMode === 0 } onChange={ () => setSelectionMode(0) } />
-                            <label htmlFor="selection-only">Apenas mobis selecionados</label>
-                        </Flex>
-                        <Flex alignItems="center" gap={ 1 }>
-                            <input type="radio" id="selection-any" name="selectionMode" checked={ selectionMode === 1 } onChange={ () => setSelectionMode(1) } />
-                            <label htmlFor="selection-any">Qualquer mobi</label>
-                        </Flex>
-                    </Column>
-                ) }
+                        <select
+                            className="form-select form-select-sm"
+                            value={ selectionMode }
+                            onChange={ event => setSelectionMode(Number(event.target.value) === 1 ? 1 : 0) }>
+                            <option value={ 0 }>Apenas mobis selecionados</option>
+                            <option value={ 1 }>Qualquer cronômetro do quarto</option>
+                        </select>
+                    </Column> }
             </Column>
         </WiredTriggerBaseView>
     );

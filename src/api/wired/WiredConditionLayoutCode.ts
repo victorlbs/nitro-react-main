@@ -42,5 +42,7 @@ export class WiredConditionlayout
     public static FURNI_HEIGHT_COMPARE: number = 37;
     public static HABBO_ON_FURNI: number = 38;
     public static FURNI_IN_NEIGHBOURHOOD = 39;
+    public static CAN_PERFORM_MOVEMENTS = 40;
+    public static TEAM_IS_WINNING = 41;
 
 }

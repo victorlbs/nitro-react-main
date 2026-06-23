@@ -32,4 +32,6 @@ export class WiredActionLayoutCode
      public static SET_USER_VARIABLE = 120;
      public static GIVE_VARIABLE = 102;
             public static SEND_SIGNAL: number = 83;
+               public static WRITE_LOG: number = 105;
+               public static MOVE_MOBI_TO_HABBO: number = 84;
 }

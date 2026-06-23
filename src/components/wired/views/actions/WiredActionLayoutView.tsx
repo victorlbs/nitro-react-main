@@ -29,6 +29,9 @@ import { WiredActionSetFurniStateToView } from './WiredActionSetFurniStateToView
 import { WiredActionTeleportView } from './WiredActionTeleportView';
 import { WiredActionToggleFurniStateView } from './WiredActionToggleFurniStateView';
 import { WiredActionUserVariableView } from './WiredActionUserVariableView';
+import { WiredActionWriteLogView } from './WiredActionWriteLogView';
+import { WiredActionMoveMobiToHabboView } from './WiredActionMoveMobiToHabboView';
+
 export const WiredActionLayoutView = (code: number) =>
 {
     switch(code)
@@ -92,6 +95,13 @@ export const WiredActionLayoutView = (code: number) =>
        return <WiredActionUserVariableView/>;
        case WiredActionLayoutCode.GIVE_VARIABLE:
     return <WiredActionGiveVariableView />;
+
+    case WiredActionLayoutCode.MOVE_MOBI_TO_HABBO:
+    return <WiredActionMoveMobiToHabboView />;
+
+
+      case WiredActionLayoutCode.WRITE_LOG:
+            return <WiredActionWriteLogView />;
 
        case WiredActionLayoutCode.SEND_SIGNAL:
             return <WiredActionSendSignalView />;
