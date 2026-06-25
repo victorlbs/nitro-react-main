@@ -1,0 +1,132 @@
+.nitro-user-settings-video {
+    width: 410px !important;
+    background: #e6e5dd !important;
+    border: 2px solid #000 !important;
+    border-radius: 4px !important;
+    overflow: hidden !important;
+
+    .nitro-card-header {
+        height: 43px !important;
+        background: #2a7798 !important;
+        color: #fff !important;
+        font-size: 22px !important;
+        font-weight: 700 !important;
+        text-align: center !important;
+        justify-content: center !important;
+        border-bottom: 2px solid #0c4057 !important;
+    }
+
+    .nitro-user-settings-content {
+        background: #e6e5dd !important;
+    }
+
+    .user-settings-tabs {
+        height: 38px;
+        display: flex;
+        align-items: flex-end;
+        gap: 4px;
+        padding: 0 0 0 0;
+        background: #2a7798;
+        border-bottom: 2px solid #000;
+
+        button {
+            height: 36px;
+            min-width: 65px;
+            padding: 0 13px;
+            border: 1px solid #000;
+            border-bottom: 0;
+            border-radius: 4px 4px 0 0;
+            background: #b7c3cc;
+            color: #111;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+
+            &.active {
+                background: #e6e5dd;
+                height: 38px;
+                margin-bottom: -2px;
+            }
+        }
+    }
+
+    .user-settings-panel {
+        min-height: 365px;
+        padding: 14px;
+        background: #e6e5dd;
+        color: #111;
+    }
+
+    .settings-check-row {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 14px;
+        color: #111;
+
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #257e9f;
+        }
+    }
+
+    .settings-volume-row {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+
+        input[type="range"] {
+            width: 100%;
+        }
+    }
+
+    .video-settings-panel {
+        .video-setting-row {
+            display: grid;
+            grid-template-columns: 1fr 190px;
+            align-items: center;
+            gap: 8px;
+            min-height: 40px;
+
+            select {
+                height: 38px;
+                padding: 0 10px;
+                border: 1px solid #c0c8cf;
+                border-radius: 5px;
+                background: #fff;
+                color: #222;
+                font-size: 16px;
+            }
+        }
+
+        .video-settings-reset {
+            width: 100%;
+            height: 34px;
+            border: 1px solid #0c4e67;
+            border-radius: 4px;
+            background: #257e9f;
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+
+            &:hover {
+                background: #2e91b5;
+            }
+        }
+    }
+}
+
+/* Modo visual aplicado pelas opções de vídeo */
+html.nitro-video-quality canvas {
+    image-rendering: auto !important;
+}
+
+html.nitro-video-balanced canvas {
+    image-rendering: auto !important;
+}
+
+html.nitro-video-performance canvas,
+html.nitro-video-no-antialias canvas {
+    image-rendering: pixelated !important;
+}

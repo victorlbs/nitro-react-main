@@ -1,41 +1,325 @@
 .nitro-navigator {
-    width: $navigator-width;
-    height: $navigator-height;
+    width: 530px;
+    height: 620px;
+    border: 2px solid #000;
+    border-radius: 7px;
+    overflow: hidden;
+    background: #eeeeea;
+    box-shadow: 0 2px 0 rgba(255, 255, 255, .35) inset;
 
+    .nitro-window-header,
+    .window-header {
+        height: 38px;
+        background: #207f99;
+        border-bottom: 2px solid #0f5368;
+        color: #fff;
+        font-weight: bold;
+        font-size: 17px;
+        text-align: center;
+        justify-content: center;
+        text-shadow: 0 1px 0 rgba(0, 0, 0, .45);
+    }
+
+    .nitro-window-content,
+    .window-content {
+        background: #eeeeea;
+        padding: 8px 10px 10px;
+    }
+
+    /**
+     * Abas: Público / Todos os quartos / Jogos / Meu mundo
+     */
+    .nav-tabs,
+    .navigator-tabs {
+        border-bottom: 2px solid #000;
+        margin: 0 -10px 8px;
+        padding-left: 82px;
+        background: #eeeeea;
+
+        .nav-item {
+            margin-bottom: -2px;
+        }
+
+        .nav-link {
+            height: 37px;
+            padding: 8px 12px;
+            background: #d1d1c9;
+            border: 1px solid #000;
+            border-bottom: 2px solid #000;
+            border-radius: 7px 7px 0 0;
+            color: #111;
+            font-size: 16px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .7);
+
+            &.active {
+                background: #f4f4ef;
+                border-bottom-color: #f4f4ef;
+            }
+        }
+    }
+
+    /**
+     * Área de busca
+     */
+    .navigator-search,
+    .navigator-search-container,
+    .search-container {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+        margin-bottom: 8px;
+
+        select,
+        input {
+            height: 36px;
+            border: 1px solid #c6cbd0;
+            border-radius: 4px;
+            background: #fff;
+            color: #333;
+            font-size: 16px;
+            box-shadow: none;
+        }
+
+        select {
+            width: 175px;
+            min-width: 175px;
+        }
+
+        input {
+            flex: 1;
+        }
+
+        button {
+            width: 42px;
+            height: 36px;
+            border: 1px solid #126477;
+            border-radius: 4px;
+            background: #207f99;
+            color: #fff;
+            font-size: 18px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .25);
+
+            &:hover {
+                background: #2695b2;
+            }
+        }
+    }
+
+    /**
+     * Título da categoria: Quartos mais populares
+     */
+    .navigator-category-name,
+    .navigator-search-result-title,
+    .navigator-result-title {
+        color: #1f7b98;
+        font-size: 20px;
+        font-weight: normal;
+        margin: 4px 0 5px;
+
+        &:before {
+            content: "− ";
+            font-weight: bold;
+        }
+    }
+
+    /**
+     * Lista de quartos
+     */
     .navigator-grid {
+        height: 382px;
+        overflow-y: auto;
+        background: #fff;
+        border: 1px solid #b8b8b8;
+        border-radius: 2px;
+        padding: 4px;
+        display: block;
 
         .navigator-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: 24px;
+            min-height: 24px;
+            padding: 0 30px 0 6px;
+            margin: 0;
+            border: 0;
+            border-radius: 0;
+            background: #fff;
+            color: #000;
+            font-size: 15px;
+            line-height: 24px;
+            cursor: pointer;
+            overflow: hidden;
+
+            &:nth-child(odd) {
+                background: #cfe7f8;
+            }
+
+            &:nth-child(even) {
+                background: #ffffff;
+            }
+
+            &:hover {
+                background: #fff2b0;
+            }
 
             .badge {
-                width: 35px;
-                min-width: 35px;
+                width: 50px;
+                min-width: 50px;
+                height: 22px;
+                margin-right: 7px;
+                padding: 0;
+                border-radius: 4px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                color: #fff;
+                font-weight: bold;
+                font-size: 13px;
+                line-height: 22px;
+                text-shadow: 0 1px 0 rgba(0, 0, 0, .25);
+                background: #59b85b;
+
+                &:before {
+                    content: "♟";
+                    margin-right: 3px;
+                    font-size: 11px;
+                    color: #fff;
+                }
+            }
+
+            /**
+             * Cores por quantidade de usuários.
+             * O Nitro normalmente só manda número, então aqui é visual.
+             */
+            &:has(.badge) {
+                .badge {
+                    background: #59b85b;
+                }
+            }
+
+            .navigator-room-name,
+            .room-name,
+            .item-name,
+            .text {
+                flex: 1;
+                min-width: 0;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                color: #000;
+                font-weight: 500;
+            }
+
+            .navigator-room-info,
+            .room-info-icon,
+            .info-icon {
+                position: absolute;
+                right: 4px;
+                top: 2px;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background: #69d3f5;
+                color: #fff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+                font-size: 15px;
+
+                &:before {
+                    content: "i";
+                }
             }
         }
 
         &:not(.two-columns) {
-
             .navigator-item {
-    
                 &:nth-child(odd) {
-                    background-color: $grid-active-bg-color;
+                    background-color: #cfe7f8;
                 }
             }
         }
-    
+
         &.two-columns {
-    
             .navigator-item {
-        
+                width: 100%;
+                max-width: 100%;
+
                 &:nth-child(4n-2),
                 &:nth-child(4n-3) {
-                    background: $grid-active-bg-color;
+                    background: #cfe7f8;
                 }
             }
         }
     }
+
+    /**
+     * Tentativa de colorir badges por posição da lista,
+     * parecido com o print: laranja, vermelho, verde.
+     */
+    .navigator-grid {
+        .navigator-item:nth-child(1) .badge,
+        .navigator-item:nth-child(2) .badge,
+        .navigator-item:nth-child(5) .badge,
+        .navigator-item:nth-child(10) .badge {
+            background: #f5a623;
+        }
+
+        .navigator-item:nth-child(3) .badge,
+        .navigator-item:nth-child(4) .badge,
+        .navigator-item:nth-child(8) .badge,
+        .navigator-item:nth-child(11) .badge {
+            background: #d9443f;
+        }
+
+        .navigator-item:nth-child(6) .badge,
+        .navigator-item:nth-child(7) .badge,
+        .navigator-item:nth-child(9) .badge,
+        .navigator-item:nth-child(12) .badge {
+            background: #58b957;
+        }
+    }
+
+    /**
+     * Botões inferiores
+     */
+    .navigator-footer,
+    .navigator-buttons,
+    .bottom-buttons {
+        display: flex;
+        gap: 26px;
+        margin-top: 16px;
+        padding: 0 2px;
+
+        button,
+        .btn {
+            width: 235px;
+            height: 73px;
+            border: 2px solid #000;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 17px;
+            font-weight: bold;
+            text-shadow: 0 1px 0 rgba(0, 0, 0, .35);
+            box-shadow:
+                inset 0 2px 0 rgba(255, 255, 255, .55),
+                inset 0 -2px 0 rgba(0, 0, 0, .18);
+        }
+
+        button:first-child,
+        .btn:first-child {
+            background: linear-gradient(90deg, #15a8d6 0%, #15a8d6 42%, #0798ca 42%, #0798ca 100%);
+        }
+
+        button:last-child,
+        .btn:last-child {
+            background: linear-gradient(90deg, #a2d96f 0%, #a2d96f 42%, #61bf3c 42%, #61bf3c 100%);
+        }
+    }
 }
-
-
 
 .nitro-navigator-doorbell,
 .nitro-navigator-password {

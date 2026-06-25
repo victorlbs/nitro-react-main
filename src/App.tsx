@@ -1,6 +1,7 @@
 import { ConfigurationEvent, GetAssetManager, HabboWebTools, LegacyExternalInterface, Nitro, NitroCommunicationDemoEvent, NitroConfiguration, NitroEvent, NitroLocalizationEvent, NitroVersion, RoomEngineEvent } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { GetCommunication, GetConfiguration, GetNitroInstance, GetUIVersion } from './api';
+import { ApplyVideoSettingsBeforeBootstrap, ApplyVideoSettingsRuntime } from './api/video-settings/VideoSettingsManager';
 import { Base, TransitionAnimation, TransitionAnimationTypes } from './common';
 import { LoadingView } from './components/loading/LoadingView';
 import { MainView } from './components/main/MainView';
@@ -16,22 +17,25 @@ export const App: FC<{}> = props =>
     const [ percent, setPercent ] = useState(0);
     const [ imageRendering, setImageRendering ] = useState<boolean>(true);
 
-    if(!GetNitroInstance())
-    {
-        //@ts-ignore
-        if(!NitroConfig) throw new Error('NitroConfig is not defined!');
+if(!GetNitroInstance())
+{
+    //@ts-ignore
+    if(!NitroConfig) throw new Error('NitroConfig is not defined!');
 
-        Nitro.bootstrap();
-    }
+    ApplyVideoSettingsBeforeBootstrap();
+
+    Nitro.bootstrap();
+}
 
     const handler = useCallback(async (event: NitroEvent) =>
     {
         switch(event.type)
         {
             case ConfigurationEvent.LOADED:
-                GetNitroInstance().localization.init();
-                setPercent(prevValue => (prevValue + 20));
-                return;
+    ApplyVideoSettingsRuntime();
+    GetNitroInstance().localization.init();
+    setPercent(prevValue => (prevValue + 20));
+    return;
             case ConfigurationEvent.FAILED:
                 setIsError(true);
                 setMessage('Configuration Failed');

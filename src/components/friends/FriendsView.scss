@@ -248,3 +248,484 @@
         }
     }
 }
+
+
+/* =========================================================
+   MENU DE AMIGOS ESTILO HABBO ANTIGO / HABBLET
+   ========================================================= */
+
+.nitro-friends {
+    width: 445px !important;
+    height: 367px !important;
+    background: #d9d9d9 !important;
+    border: 1px solid #9d9d9d !important;
+    border-radius: 3px !important;
+    overflow: hidden !important;
+    box-shadow: none !important;
+    color: #111 !important;
+
+    .nitro-card-header,
+    .card-header,
+    .window-header {
+        height: 45px !important;
+        min-height: 45px !important;
+        padding: 0 6px !important;
+        background: #d3d3d3 !important;
+        border: 0 !important;
+        border-bottom: 1px solid #c2c2c2 !important;
+        border-radius: 0 !important;
+        color: #111 !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 5px !important;
+        box-shadow: none !important;
+    }
+
+    .nitro-card-header-text,
+    .header-text,
+    .card-title {
+        color: #111 !important;
+        font-size: 16px !important;
+        font-weight: 700 !important;
+        text-shadow: none !important;
+        margin-right: 4px !important;
+        display: flex !important;
+        align-items: center !important;
+
+        &:before {
+            content: "";
+            width: 16px;
+            height: 14px;
+            display: inline-block;
+            margin-right: 4px;
+            background-image: url("@/assets/images/friends/friends-spritesheet.png");
+            background-repeat: no-repeat;
+            background-position: -69px -5px;
+            image-rendering: pixelated;
+        }
+    }
+
+    .nitro-card-header-close,
+    .close,
+    .btn-close {
+        width: 30px !important;
+        height: 30px !important;
+        min-width: 30px !important;
+        margin-left: auto !important;
+        border: 1px solid #8a1c1c !important;
+        border-radius: 5px !important;
+        background: linear-gradient(#ef3f32, #c71f18) !important;
+        color: #fff !important;
+        opacity: 1 !important;
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, .45),
+            inset 0 -2px 0 rgba(0, 0, 0, .25) !important;
+
+        &:before,
+        &:after {
+            filter: brightness(0) invert(1);
+        }
+    }
+
+    .nitro-card-content,
+    .card-body,
+    .window-content {
+        background: #d9d9d9 !important;
+        padding: 5px !important;
+        height: calc(100% - 45px) !important;
+        border: 0 !important;
+        overflow: hidden !important;
+    }
+
+    /* Busca */
+    .search-input,
+    input[type="text"],
+    input[type="search"] {
+        width: 100% !important;
+        height: 34px !important;
+        min-height: 34px !important;
+        padding: 0 10px !important;
+        margin: 0 0 8px 0 !important;
+        background: #fff !important;
+        border: 1px solid #bfc1c3 !important;
+        border-radius: 5px !important;
+        color: #333 !important;
+        font-size: 15px !important;
+        box-shadow:
+            inset 0 1px 1px rgba(0, 0, 0, .08),
+            0 1px 0 rgba(255, 255, 255, .65) !important;
+
+        &::placeholder {
+            color: #808891 !important;
+        }
+
+        &:focus {
+            outline: none !important;
+            border-color: #9da4aa !important;
+            box-shadow:
+                inset 0 1px 1px rgba(0, 0, 0, .08),
+                0 0 0 1px rgba(255, 255, 255, .8) !important;
+        }
+    }
+
+    /* Botões On / Off / Pedidos / Buscar */
+    .btn,
+    button {
+        min-height: 32px;
+        border-radius: 4px !important;
+        border: 1px solid #9c9c9c !important;
+        background: linear-gradient(#d6d6d6, #a7a7a7) !important;
+        color: #111 !important;
+        font-size: 15px !important;
+        font-weight: 700 !important;
+        text-shadow: 0 1px 0 rgba(255, 255, 255, .45) !important;
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, .65),
+            inset 0 -2px 0 rgba(0, 0, 0, .12) !important;
+
+        &:hover {
+            background: linear-gradient(#e1e1e1, #b3b3b3) !important;
+        }
+
+        &:active,
+        &.active {
+            background: linear-gradient(#8c8c8c, #686868) !important;
+            color: #fff !important;
+            text-shadow: 0 1px 0 rgba(0, 0, 0, .6) !important;
+            box-shadow:
+                inset 0 2px 3px rgba(0, 0, 0, .35),
+                inset 0 1px 0 rgba(255, 255, 255, .18) !important;
+        }
+    }
+
+    /* Linha superior onde ficam os botões */
+    .friend-list-tabs,
+    .friends-tabs,
+    .nitro-friends-tabs {
+        height: 39px !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 5px !important;
+        padding: 4px 4px 3px !important;
+        background: #d3d3d3 !important;
+        border-bottom: 1px solid #c2c2c2 !important;
+
+        button,
+        .btn {
+            height: 32px !important;
+            padding: 0 13px !important;
+        }
+    }
+
+    /* Corpo vazio cinza igual ao print */
+    .nitro-card-accordion,
+    .accordion,
+    .friend-list-content,
+    .friends-list-content {
+        height: calc(100% - 42px) !important;
+        background: #d9d9d9 !important;
+        border: 0 !important;
+        overflow-y: auto !important;
+    }
+
+    .nitro-card-accordion-set,
+    .accordion-item {
+        background: transparent !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        margin: 0 !important;
+    }
+
+    .nitro-card-accordion-set-header,
+    .accordion-header {
+        min-height: 28px !important;
+        background: #c8c8c8 !important;
+        border: 1px solid #b8b8b8 !important;
+        color: #111 !important;
+        font-size: 14px !important;
+        font-weight: 700 !important;
+        padding: 4px 8px !important;
+    }
+
+    .nitro-card-accordion-set-content,
+    .accordion-body {
+        background: #d9d9d9 !important;
+        padding: 3px !important;
+        border: 0 !important;
+    }
+
+    /* Itens da lista de amigos */
+    .friend-list-item,
+    .layout-grid-item,
+    .list-item {
+        min-height: 34px !important;
+        background: #eeeeee !important;
+        border: 1px solid #c2c2c2 !important;
+        border-radius: 3px !important;
+        margin-bottom: 3px !important;
+        padding: 4px 6px !important;
+        color: #111 !important;
+
+        &:hover {
+            background: #f8f8f8 !important;
+        }
+
+        &.active,
+        &.selected {
+            background: #bfcfe3 !important;
+        }
+    }
+
+    .friend-head {
+        image-rendering: pixelated;
+    }
+
+    .avatar-image {
+        image-rendering: pixelated;
+    }
+
+    /* Remove visual moderno demais */
+    .bg-primary,
+    .bg-dark,
+    .bg-light {
+        background-color: transparent !important;
+    }
+
+    .text-white {
+        color: #111 !important;
+    }
+}
+.nitro-friends-habblet {
+    width: 445px !important;
+    height: 367px !important;
+    background: #d9d9d9 !important;
+    border: 1px solid #9b9b9b !important;
+    border-radius: 3px !important;
+    overflow: hidden !important;
+    box-shadow: none !important;
+    color: #111 !important;
+
+    .friends-habblet-header {
+        height: 45px;
+        min-height: 45px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 5px;
+        background: #d3d3d3;
+        border-bottom: 1px solid #bfbfbf;
+    }
+
+    .friends-habblet-title {
+        height: 32px;
+        display: flex;
+        align-items: center;
+        color: #111;
+        font-size: 16px;
+        font-weight: 700;
+        white-space: nowrap;
+        margin-right: 3px;
+    }
+
+    .friends-habblet-icon {
+        width: 17px;
+        height: 16px;
+        display: inline-block;
+        margin-right: 4px;
+        image-rendering: pixelated;
+        position: relative;
+
+        &:before {
+            content: "👥";
+            position: absolute;
+            left: -1px;
+            top: -2px;
+            font-size: 13px;
+            line-height: 16px;
+        }
+    }
+
+    .friends-habblet-tab {
+        height: 32px;
+        min-width: 44px;
+        padding: 0 11px;
+        border: 1px solid #9a9a9a;
+        border-radius: 4px;
+        background: linear-gradient(#d9d9d9, #ababab);
+        color: #111;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, .65),
+            inset 0 -2px 0 rgba(0, 0, 0, .13);
+
+        &:hover {
+            background: linear-gradient(#e4e4e4, #b8b8b8);
+        }
+
+        &.active {
+            background: linear-gradient(#8e8e8e, #6c6c6c);
+            color: #fff;
+            text-shadow: 0 1px 0 rgba(0, 0, 0, .7);
+            box-shadow:
+                inset 0 2px 3px rgba(0, 0, 0, .35),
+                inset 0 1px 0 rgba(255, 255, 255, .18);
+        }
+    }
+
+    .friends-habblet-close {
+        width: 30px;
+        height: 30px;
+        min-width: 30px;
+        margin-left: auto;
+        border: 1px solid #8b1717;
+        border-radius: 5px;
+        background: linear-gradient(#f04438, #c91e17);
+        color: #fff;
+        font-size: 27px;
+        font-weight: 700;
+        line-height: 24px;
+        cursor: pointer;
+        text-align: center;
+        padding: 0 0 3px 0;
+        text-shadow: 0 1px 0 rgba(0, 0, 0, .55);
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, .45),
+            inset 0 -2px 0 rgba(0, 0, 0, .25);
+
+        &:hover {
+            background: linear-gradient(#ff5449, #d92720);
+        }
+
+        &:active {
+            transform: translateY(1px);
+        }
+    }
+
+    .friends-habblet-content {
+        height: calc(100% - 45px) !important;
+        background: #d9d9d9 !important;
+        padding: 5px !important;
+        border: 0 !important;
+        overflow: hidden !important;
+    }
+
+    .friends-habblet-search-input {
+        width: 100%;
+        height: 34px;
+        min-height: 34px;
+        margin: 0 0 8px 0;
+        padding: 0 10px;
+        border: 1px solid #bfc1c3;
+        border-radius: 5px;
+        background: #fff;
+        color: #333;
+        font-size: 15px;
+        box-shadow:
+            inset 0 1px 1px rgba(0, 0, 0, .08),
+            0 1px 0 rgba(255, 255, 255, .65);
+
+        &::placeholder {
+            color: #808891;
+        }
+
+        &:focus {
+            outline: none;
+            border-color: #969da4;
+        }
+    }
+
+    .friends-habblet-body {
+        height: calc(100% - 42px);
+        background: #d9d9d9;
+        overflow-y: auto;
+        overflow-x: hidden;
+        border: 0;
+    }
+
+    .friends-habblet-accordion {
+        height: 100%;
+        background: #d9d9d9 !important;
+        border: 0 !important;
+    }
+
+    .nitro-card-accordion,
+    .nitro-card-accordion-set,
+    .nitro-card-accordion-set-content,
+    .accordion,
+    .accordion-item,
+    .accordion-body {
+        background: #d9d9d9 !important;
+        border: 0 !important;
+        box-shadow: none !important;
+    }
+
+    .nitro-card-accordion-set-header,
+    .accordion-header {
+        min-height: 28px !important;
+        background: #c8c8c8 !important;
+        border: 1px solid #b8b8b8 !important;
+        border-radius: 3px !important;
+        color: #111 !important;
+        font-size: 14px !important;
+        font-weight: 700 !important;
+        padding: 4px 8px !important;
+        margin-bottom: 4px !important;
+    }
+
+    .friend-list-item,
+    .layout-grid-item,
+    .list-item {
+        min-height: 34px !important;
+        background: #eeeeee !important;
+        border: 1px solid #c2c2c2 !important;
+        border-radius: 3px !important;
+        margin-bottom: 3px !important;
+        padding: 4px 6px !important;
+        color: #111 !important;
+
+        &:hover {
+            background: #f8f8f8 !important;
+        }
+
+        &.active,
+        &.selected {
+            background: #bfcfe3 !important;
+        }
+    }
+
+    .friends-habblet-actions {
+        position: absolute;
+        left: 5px;
+        right: 5px;
+        bottom: 5px;
+        background: #d9d9d9;
+        border-top: 1px solid #c2c2c2;
+    }
+
+    button.btn,
+    .btn {
+        border-radius: 4px !important;
+        border: 1px solid #969696 !important;
+        background: linear-gradient(#d6d6d6, #a8a8a8) !important;
+        color: #111 !important;
+        font-weight: 700 !important;
+        text-shadow: 0 1px 0 rgba(255, 255, 255, .5) !important;
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, .65),
+            inset 0 -2px 0 rgba(0, 0, 0, .15) !important;
+
+        &:hover {
+            background: linear-gradient(#e2e2e2, #b5b5b5) !important;
+        }
+    }
+
+    .btn-danger {
+        background: linear-gradient(#ef4c44, #c8231c) !important;
+        color: #fff !important;
+        text-shadow: 0 1px 0 rgba(0, 0, 0, .6) !important;
+        border-color: #8b1717 !important;
+    }
+}

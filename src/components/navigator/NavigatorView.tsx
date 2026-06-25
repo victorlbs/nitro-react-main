@@ -227,6 +227,7 @@ export const NavigatorView: FC<{}> = props =>
             <NavigatorDoorStateView />
             { isRoomInfoOpen && <NavigatorRoomInfoView onCloseClick={ () => setRoomInfoOpen(false) } /> }
             { isRoomLinkOpen && <NavigatorRoomLinkView onCloseClick={ () => setRoomLinkOpen(false) } /> }
+                
             <NavigatorRoomSettingsView />
         </>
     );

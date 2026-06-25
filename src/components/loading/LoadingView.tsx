@@ -1,5 +1,6 @@
-import { FC, useEffect, useState } from 'react';
-import { Column, LayoutProgressBar, Text } from '../../common';
+import { FC, useEffect, useMemo, useState } from 'react';
+import { Column, Text } from '../../common';
+import './LoadingView.scss';
 
 interface LoadingViewProps {
     isError: boolean;
@@ -7,62 +8,96 @@ interface LoadingViewProps {
     percent: number;
 }
 
-// Frases clássicas que aparecem acima da barra (incluindo a da print)
-const habboPhrases = [
-    "O que veio primeiro? O Pixel ou a Galinha?",
-    "Carregando os blocos e construindo...",
-    "Acordando os mascotes...",
-    "Procurando o Frank...",
-    "Polindo os mobis de ouro..."
+const loadingPhrases = [
+    'Olhe para um lado. Olhe para o outro. Pisque duas vezes. Pronto!',
+    'O que veio primeiro? O Pixel ou a Galinha?',
+    'Carregando os blocos e construindo...',
+    'Acordando os mascotes...',
+    'Procurando o Frank...',
+    'Polindo os mobis de ouro...',
+    'Preparando seu quarto...',
+    'Conectando ao hotel...',
+    'Arrumando os mobis no lugar...',
+    'Chamando seus amigos...'
 ];
+
+const clampPercent = (value: number): number => {
+    if (Number.isNaN(value)) return 0;
+    if (value < 0) return 0;
+    if (value > 100) return 100;
+
+    return value;
+};
 
 export const LoadingView: FC<LoadingViewProps> = props => {
     const { isError = false, message = '', percent = 0 } = props;
-    const [randomPhrase, setRandomPhrase] = useState(habboPhrases[0]);
+
+    const [ randomPhrase, setRandomPhrase ] = useState(loadingPhrases[0]);
+
+    const safePercent = useMemo(() => clampPercent(percent), [ percent ]);
 
     useEffect(() => {
-        // Seleciona uma frase aleatória ao carregar
-        setRandomPhrase(habboPhrases[Math.floor(Math.random() * habboPhrases.length)]);
+        setRandomPhrase(loadingPhrases[Math.floor(Math.random() * loadingPhrases.length)]);
     }, []);
-    
+
     return (
-        <Column fullHeight alignItems="center" justifyContent="center" className="nitro-loading-modern">
-            
-            {/* 1. Imagem/Logo Central (Substitua a URL pela sua logo) */}
-            <div className="loading-logo-container mb-4">
-                <img 
-                    src="https://habbofont.net/font/paradise_rounded/habbriol.gif" /* Coloque o link da SUA logo do H aqui */
-                    alt="Logo do Hotel" 
-                    className="loading-logo"
-                />
+        <Column
+            fullHeight
+            alignItems="center"
+            justifyContent="center"
+            className="nitro-loading-habblet"
+        >
+            <div className="loading-stars" />
+
+            <div className="loading-center">
+                <div className="loading-photo-stack">
+                    <div className="loading-photo loading-photo-back loading-photo-back-left" />
+                    <div className="loading-photo loading-photo-back loading-photo-back-right" />
+
+                    <div className="loading-photo loading-photo-front">
+                        <img
+                            src="https://cdn.comprahabbo.com/camerabriol/1251_1782230211.png"
+                            alt="Habbo"
+                            draggable={ false }
+                        />
+
+                        <div className="loading-habbo-logo">
+                            Habbriol
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            {/* 2. Área da Barra de Progresso e Textos */}
-            <div className="progress-container">
-                { isError && (message && message.length) ? (
-                    <Text className="error-message">{ message }</Text>
+            <div className="loading-bottom">
+                { isError && message.length > 0 ? (
+                    <Text className="loading-error">
+                        { message }
+                    </Text>
                 ) : (
                     <>
-                        {/* Frase acima da barra */}
-                        <Text className="loading-text mb-2">
+                        <Text className="loading-message">
                             { message || randomPhrase }
                         </Text>
-                        
-                        {/* Barra de Progresso com novo invólucro */}
-                        <div className="modern-progress-wrapper">
-                            <LayoutProgressBar progress={ percent } className="modern-bar" />
+
+                        <div className="loading-progress-outer">
+                            <div className="loading-progress-inner">
+                                <div
+                                    className="loading-progress-fill"
+                                    style={{ width: `${ safePercent }%` }}
+                                />
+                            </div>
                         </div>
-                        
-                        {/* Porcentagem abaixo da barra */}
-                        <Text className="loading-percent mt-2">
-                            { percent.toFixed() }%
+
+                        <Text className="loading-percent">
+                            { safePercent.toFixed() }%
                         </Text>
                     </>
                 )}
             </div>
 
-            {/* 3. Versão no canto inferior direito (Igual à imagem) */}
-            <Text className="version-text">v3.2.7</Text>
+            <Text className="loading-version">
+                v3.2.7
+            </Text>
         </Column>
     );
-}
+};
