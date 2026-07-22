@@ -1,13 +1,14 @@
 import { FC } from 'react';
 import { FaCaretLeft, FaCaretRight } from 'react-icons/fa';
 import { LocalizeText } from '../../../../../api';
-import { Flex, Text } from '../../../../../common';
+import { Button, Flex, Text } from '../../../../../common';
 import { useCatalog } from '../../../../../hooks';
 
 const MIN_VALUE: number = 1;
 const MAX_VALUE: number = 100;
+const QUICK_VALUES = [ 1, 5, 10, 50 ];
 
-export const CatalogSpinnerWidgetView: FC<{}> = props =>
+export const CatalogSpinnerWidgetView: FC<{}> = () =>
 {
     const { currentOffer = null, purchaseOptions = null, setPurchaseOptions = null } = useCatalog();
     const { quantity = 1 } = purchaseOptions;
@@ -29,7 +30,7 @@ export const CatalogSpinnerWidgetView: FC<{}> = props =>
 
             return newValue;
         });
-    }
+    };
 
     if(!currentOffer || !currentOffer.bundlePurchaseAllowed) return null;
 
@@ -37,10 +38,25 @@ export const CatalogSpinnerWidgetView: FC<{}> = props =>
         <>
             <Text>{ LocalizeText('catalog.bundlewidget.spinner.select.amount') }</Text>
             <Flex alignItems="center" gap={ 1 }>
-                <FaCaretLeft className="text-black cursor-pointer fa-icon" onClick={ event => updateQuantity(quantity - 1) } />
-                <input type="number" className="form-control form-control-sm quantity-input" value={ quantity } onChange={ event => updateQuantity(event.target.valueAsNumber) } />
-                <FaCaretRight className="text-black cursor-pointer fa-icon" onClick={ event => updateQuantity(quantity + 1) } />
+                <FaCaretLeft className="text-black cursor-pointer fa-icon" onClick={ () => updateQuantity(quantity - 1) } />
+                <input
+                    type="number"
+                    className="form-control form-control-sm quantity-input"
+                    value={ quantity }
+                    onChange={ event => updateQuantity(event.target.valueAsNumber) }
+                />
+                <FaCaretRight className="text-black cursor-pointer fa-icon" onClick={ () => updateQuantity(quantity + 1) } />
+            </Flex>
+            <Flex gap={ 1 } className="catalog-quantity-quick-buttons">
+                { QUICK_VALUES.map(value =>
+                    <Button
+                        key={ value }
+                        variant={ quantity === value ? 'primary' : 'secondary' }
+                        onClick={ () => updateQuantity(value) }
+                    >
+                        { value }
+                    </Button>) }
             </Flex>
         </>
     );
-}
+};

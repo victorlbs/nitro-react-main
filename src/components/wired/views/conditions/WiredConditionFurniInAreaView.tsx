@@ -1,103 +1,283 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { WiredFurniType } from '../../../../api';
 import { Column, Flex, Text } from '../../../../common';
 import { useWired } from '../../../../hooks';
 import { WiredConditionBaseView } from './WiredConditionBaseView';
 
-/**
- * React view for the custom "Furni in Area" wired condition. This UI allows the
- * user to configure a rectangular area on the room floor by specifying two corner
- * coordinates (x1,y1) and (x2,y2). An optional filter restricts the check to
- * only the furniture that triggered the wired stack, and another option inverts
- * the result so the condition passes when no relevant furniture is inside the area.
- */
+type TilePoint = {
+    x: number;
+    y: number;
+};
+
+const MAP_WIDTH = 20;
+const MAP_HEIGHT = 20;
+const TILE_WIDTH = 18;
+const TILE_HEIGHT = 9;
+const ORIGIN_X = 185;
+const ORIGIN_Y = 12;
+
+const normalizeArea = (x1: number, y1: number, x2: number, y2: number) =>
+{
+    return {
+        minX: Math.min(x1, x2),
+        minY: Math.min(y1, y2),
+        maxX: Math.max(x1, x2),
+        maxY: Math.max(y1, y2)
+    };
+};
+
+const getTilePoints = (x: number, y: number): string =>
+{
+    const centerX = ((x - y) * (TILE_WIDTH / 2)) + ORIGIN_X;
+    const centerY = ((x + y) * (TILE_HEIGHT / 2)) + ORIGIN_Y;
+
+    return [
+        `${ centerX },${ centerY }`,
+        `${ centerX + (TILE_WIDTH / 2) },${ centerY + (TILE_HEIGHT / 2) }`,
+        `${ centerX },${ centerY + TILE_HEIGHT }`,
+        `${ centerX - (TILE_WIDTH / 2) },${ centerY + (TILE_HEIGHT / 2) }`
+    ].join(' ');
+};
+
 export const WiredConditionFurniInAreaView: FC<{}> = () =>
 {
-    // State for whether to filter only triggering furni (true) or use all items (false)
     const [ filterSelection, setFilterSelection ] = useState(false);
-    // State for inverting the result of the condition
     const [ invert, setInvert ] = useState(false);
-    // Coordinates for the first and second corners of the rectangular area
+
     const [ x1, setX1 ] = useState(0);
     const [ y1, setY1 ] = useState(0);
     const [ x2, setX2 ] = useState(0);
     const [ y2, setY2 ] = useState(0);
 
-    // Hook provided by the wired system to access existing trigger data and commit changes
+    const [ isDragging, setIsDragging ] = useState(false);
+    const [ hoverTile, setHoverTile ] = useState<TilePoint>({ x: 0, y: 0 });
+    const [ selectionStart, setSelectionStart ] = useState<TilePoint>({ x: 0, y: 0 });
+
     const { trigger = null, setIntParams = null } = useWired();
 
-    // Initialise state from existing wired configuration when editing
+    const selectedArea = useMemo(() =>
+    {
+        return normalizeArea(x1, y1, x2, y2);
+    }, [ x1, y1, x2, y2 ]);
+
+    const tiles = useMemo(() =>
+    {
+        const items: TilePoint[] = [];
+
+        for(let y = 0; y < MAP_HEIGHT; y++)
+        {
+            for(let x = 0; x < MAP_WIDTH; x++)
+            {
+                items.push({ x, y });
+            }
+        }
+
+        return items;
+    }, []);
+
     useEffect(() =>
     {
-        if (!trigger) return;
+        if(!trigger) return;
+
         const data = trigger.intData;
-        if (Array.isArray(data) && data.length >= 6)
+
+        if(Array.isArray(data) && data.length >= 6)
         {
-            setFilterSelection(data[0] === 1);
-            setInvert(data[1] === 1);
-            setX1(data[2]);
-            setY1(data[3]);
-            setX2(data[4]);
-            setY2(data[5]);
+            const savedFilter = Number(data[0]) === 1;
+            const savedInvert = Number(data[1]) === 1;
+            const savedX1 = Math.max(0, Number(data[2]) || 0);
+            const savedY1 = Math.max(0, Number(data[3]) || 0);
+            const savedX2 = Math.max(0, Number(data[4]) || 0);
+            const savedY2 = Math.max(0, Number(data[5]) || 0);
+
+            setFilterSelection(savedFilter);
+            setInvert(savedInvert);
+            setX1(savedX1);
+            setY1(savedY1);
+            setX2(savedX2);
+            setY2(savedY2);
+            setSelectionStart({ x: savedX1, y: savedY1 });
+            setHoverTile({ x: savedX2, y: savedY2 });
         }
     }, [ trigger ]);
 
-    // Commit current state to the emulator when the user saves
+    useEffect(() =>
+    {
+        const stopDragging = () => setIsDragging(false);
+
+        window.addEventListener('mouseup', stopDragging);
+        window.addEventListener('touchend', stopDragging);
+
+        return () =>
+        {
+            window.removeEventListener('mouseup', stopDragging);
+            window.removeEventListener('touchend', stopDragging);
+        };
+    }, []);
+
     const save = () =>
     {
-        if (setIntParams)
-        {
-            setIntParams([
-                filterSelection ? 1 : 0,
-                invert ? 1 : 0,
-                x1,
-                y1,
-                x2,
-                y2
-            ]);
-        }
+        if(!setIntParams) return;
+
+        const area = normalizeArea(x1, y1, x2, y2);
+
+        setIntParams([
+            filterSelection ? 1 : 0,
+            invert ? 1 : 0,
+            area.minX,
+            area.minY,
+            area.maxX,
+            area.maxY
+        ]);
     };
 
-    // Render a pair of numeric inputs for a coordinate label
-    const renderCoordinateInputs = (label: string, valueX: number, setValueX: (value: number) => void, valueY: number, setValueY: (value: number) => void) =>
+    const selectTileStart = (tile: TilePoint) =>
+    {
+        setIsDragging(true);
+        setSelectionStart(tile);
+        setHoverTile(tile);
+
+        setX1(tile.x);
+        setY1(tile.y);
+        setX2(tile.x);
+        setY2(tile.y);
+    };
+
+    const updateTileSelection = (tile: TilePoint) =>
+    {
+        setHoverTile(tile);
+
+        if(!isDragging) return;
+
+        setX1(selectionStart.x);
+        setY1(selectionStart.y);
+        setX2(tile.x);
+        setY2(tile.y);
+    };
+
+    const clearArea = () =>
+    {
+        setX1(0);
+        setY1(0);
+        setX2(0);
+        setY2(0);
+        setSelectionStart({ x: 0, y: 0 });
+        setHoverTile({ x: 0, y: 0 });
+    };
+
+    const isTileSelected = (tile: TilePoint): boolean =>
     {
         return (
-            <Flex alignItems="center" gap={ 1 }>
-                <Text>{ label }</Text>
-                <input type="number" value={ valueX } min={ 0 } onChange={ e => setValueX(parseInt(e.target.value) || 0) } style={{ width: '60px' }} />
-                <input type="number" value={ valueY } min={ 0 } onChange={ e => setValueY(parseInt(e.target.value) || 0) } style={{ width: '60px' }} />
-            </Flex>
+            tile.x >= selectedArea.minX &&
+            tile.x <= selectedArea.maxX &&
+            tile.y >= selectedArea.minY &&
+            tile.y <= selectedArea.maxY
+        );
+    };
+
+    const isTileCorner = (tile: TilePoint): boolean =>
+    {
+        return (
+            (tile.x === x1 && tile.y === y1) ||
+            (tile.x === x2 && tile.y === y2)
         );
     };
 
     return (
-        <WiredConditionBaseView hasSpecialInput={ true } requiresFurni={ WiredFurniType.STUFF_SELECTION_OPTION_NONE } save={ save }>
-            <Column gap={ 2 }>
-                {/* Filter selection options */}
-                <Column gap={ 1 }>
-                    <Text bold>Filtrar seleção</Text>
-                    <Flex alignItems="center" gap={ 1 }>
-                        <input type="radio" id="no-filter-selection" name="filter-selection" checked={ !filterSelection } onChange={ () => setFilterSelection(false) } />
-                        <label htmlFor="no-filter-selection">Não filtrar seleção</label>
-                    </Flex>
-                    <Flex alignItems="center" gap={ 1 }>
-                        <input type="radio" id="filter-selection" name="filter-selection" checked={ filterSelection } onChange={ () => setFilterSelection(true) } />
-                        <label htmlFor="filter-selection">Filtrar seleção</label>
-                    </Flex>
-                </Column>
+        <WiredConditionBaseView
+            hasSpecialInput={ true }
+            requiresFurni={ WiredFurniType.STUFF_SELECTION_OPTION_NONE }
+            save={ save }
+        >
+            <Column gap={ 2 } className="wired-area-selector-view">
+                <div className="wired-area-selector-toolbar">
+                    <button type="button" className="wired-area-tool-button add">
+                        +
+                    </button>
 
-                {/* Invert option */}
-                <Flex alignItems="center" gap={ 1 }>
-                    <input type="checkbox" id="invert-area" checked={ invert } onChange={ e => setInvert(e.target.checked) } />
-                    <label htmlFor="invert-area">Inverter área</label>
-                </Flex>
+                    <button type="button" className="wired-area-tool-button clear" onClick={ clearArea }>
+                        ×
+                    </button>
 
-                {/* Coordinate inputs */}
-                <Column gap={ 1 }>
-                    <Text bold>Área (coordenadas)</Text>
-                    { renderCoordinateInputs('Canto superior esquerdo:', x1, setX1, y1, setY1) }
-                    { renderCoordinateInputs('Canto inferior direito:', x2, setX2, y2, setY2) }
-                </Column>
+                    <div className="wired-area-tool-separator" />
+
+                    <button type="button" className="wired-area-tool-button target">
+                        □
+                    </button>
+                </div>
+
+                <div className="wired-area-floor-wrapper">
+                    <svg
+                        className="wired-area-floor"
+                        viewBox="0 0 370 210"
+                        preserveAspectRatio="xMidYMid meet"
+                    >
+                        { tiles.map(tile =>
+                        {
+                            const selected = isTileSelected(tile);
+                            const corner = isTileCorner(tile);
+
+                            return (
+                                <polygon
+                                    key={ `${ tile.x }-${ tile.y }` }
+                                    points={ getTilePoints(tile.x, tile.y) }
+                                    className={
+                                        `wired-area-tile ${ selected ? 'selected' : '' } ${ corner ? 'corner' : '' }`
+                                    }
+                                    onMouseDown={ event =>
+                                    {
+                                        event.preventDefault();
+                                        selectTileStart(tile);
+                                    } }
+                                    onMouseEnter={ () => updateTileSelection(tile) }
+                                    onMouseUp={ () => setIsDragging(false) }
+                                />
+                            );
+                        }) }
+                    </svg>
+
+                    <div className="wired-area-coordinates">
+                        <span>x:</span>
+                        <input type="number" value={ hoverTile.x } readOnly />
+                        <span>y:</span>
+                        <input type="number" value={ hoverTile.y } readOnly />
+                    </div>
+                </div>
+
+                <div className="wired-area-selected-info">
+                    <Text bold>Área selecionada:</Text>
+                    <span>
+                        ({ selectedArea.minX }, { selectedArea.minY }) até ({ selectedArea.maxX }, { selectedArea.maxY })
+                    </span>
+                </div>
+
+                <div className="wired-area-options">
+                    <Text bold>Opções do seletor:</Text>
+
+                    <Flex alignItems="center" gap={ 1 }>
+                        <input
+                            type="checkbox"
+                            id="wired-area-filter-existing"
+                            checked={ filterSelection }
+                            onChange={ event => setFilterSelection(event.target.checked) }
+                        />
+                        <label htmlFor="wired-area-filter-existing">
+                            Filtrar seleção existente
+                        </label>
+                    </Flex>
+
+                    <Flex alignItems="center" gap={ 1 }>
+                        <input
+                            type="checkbox"
+                            id="wired-area-invert"
+                            checked={ invert }
+                            onChange={ event => setInvert(event.target.checked) }
+                        />
+                        <label htmlFor="wired-area-invert">
+                            Inverter
+                        </label>
+                    </Flex>
+                </div>
             </Column>
         </WiredConditionBaseView>
     );

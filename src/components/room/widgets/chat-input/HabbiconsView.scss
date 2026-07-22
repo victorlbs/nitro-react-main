@@ -1,0 +1,673 @@
+.habbicons-window-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 5000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 16px;
+
+    background: rgba(0, 0, 0, .12);
+}
+
+.habbicons-window {
+    width: min(700px, calc(100vw - 24px));
+    max-height: min(710px, calc(100vh - 24px));
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    border: 2px solid #1d1d1d;
+    border-radius: 8px;
+
+    background: #d7d1bd;
+
+    box-shadow:
+        0 3px 0 rgba(0, 0, 0, .35),
+        inset 0 0 0 2px rgba(255, 255, 255, .35);
+
+    image-rendering: pixelated;
+}
+
+.habbicons-window-header {
+    position: relative;
+
+    min-height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 6px 46px;
+
+    background: #347f9d;
+    border-bottom: 2px solid #1f5368;
+
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    text-shadow: 0 1px #1e5064;
+}
+
+.habbicons-close-button {
+    position: absolute;
+    top: 5px;
+    right: 7px;
+
+    width: 25px;
+    height: 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: 2px solid #552015;
+    border-radius: 5px;
+
+    background: #c74632;
+
+    color: #fff;
+    font-size: 23px;
+    font-weight: 700;
+    line-height: 1;
+
+    cursor: pointer;
+
+    box-shadow:
+        inset 1px 1px rgba(255, 255, 255, .5),
+        inset -1px -1px rgba(0, 0, 0, .25);
+}
+
+.habbicons-hero {
+    position: relative;
+
+    padding: 15px 16px 17px;
+
+    background:
+        linear-gradient(rgba(38, 116, 146, .96), rgba(38, 116, 146, .96)),
+        repeating-linear-gradient(
+            45deg,
+            transparent 0,
+            transparent 7px,
+            rgba(255, 255, 255, .06) 7px,
+            rgba(255, 255, 255, .06) 8px
+        );
+
+    border-bottom: 2px solid #23627b;
+
+    color: #fff;
+}
+
+.habbicons-hero-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    padding-right: 275px;
+}
+
+.habbicons-main-icon {
+    width: 94px;
+    height: 72px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 auto;
+}
+
+.habbicons-main-icon img {
+    max-width: 94px;
+    max-height: 72px;
+
+    object-fit: contain;
+    image-rendering: pixelated;
+}
+
+.habbicons-hero h2 {
+    margin: 0 0 2px;
+
+    color: #fff;
+    font-size: 25px;
+    line-height: 1;
+}
+
+.habbicons-hero p {
+    max-width: 330px;
+
+    margin: 0;
+
+    color: #d8edf4;
+    font-size: 14px;
+    line-height: 1.2;
+}
+
+.habbicons-stat-cards {
+    position: absolute;
+    top: 14px;
+    right: 15px;
+
+    display: flex;
+    gap: 10px;
+}
+
+.habbicons-stat-card {
+    width: 126px;
+    min-height: 54px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    border: 2px solid #102b35;
+    border-radius: 7px;
+
+    background: #3f8fae;
+
+    color: #fff;
+    text-align: center;
+
+    box-shadow:
+        inset 1px 1px rgba(255, 255, 255, .35),
+        0 2px 0 rgba(0, 0, 0, .25);
+}
+
+.habbicons-stat-card span {
+    font-size: 12px;
+}
+
+.habbicons-stat-card strong {
+    margin-top: 2px;
+    font-size: 18px;
+}
+
+.habbicons-total-progress {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin: 12px 135px 0 112px;
+}
+
+.habbicons-progress-track {
+    height: 20px;
+
+    flex: 1;
+
+    overflow: hidden;
+
+    border: 2px solid #17252b;
+    border-radius: 7px;
+
+    background: #31515e;
+
+    box-shadow: inset 0 2px rgba(0, 0, 0, .25);
+}
+
+.habbicons-progress-fill {
+    height: 100%;
+
+    background: linear-gradient(#55b86b, #28893d);
+}
+
+.habbicons-tabs {
+    display: flex;
+    align-items: end;
+    gap: 4px;
+
+    padding: 8px 20px 0;
+
+    background: #d7d1bd;
+    border-bottom: 1px solid #7a766a;
+}
+
+.habbicons-tabs button {
+    min-height: 39px;
+
+    padding: 7px 14px;
+
+    border: 1px solid #666158;
+    border-bottom: none;
+    border-radius: 7px 7px 0 0;
+
+    background: #bcb8ae;
+
+    color: #3d3a35;
+    font-size: 14px;
+
+    cursor: pointer;
+}
+
+.habbicons-tabs button.active {
+    position: relative;
+    top: 1px;
+
+    background: #f1eee5;
+    font-weight: 700;
+}
+
+.habbicons-body {
+    min-height: 0;
+
+    display: grid;
+    grid-template-columns: 190px minmax(0, 1fr);
+
+    flex: 1;
+
+    gap: 8px;
+
+    padding: 8px;
+
+    overflow: hidden;
+
+    background: #f1eee5;
+}
+
+.habbicons-collection-list {
+    min-height: 0;
+
+    overflow-y: auto;
+
+    border: 2px solid #4b4842;
+    border-radius: 7px;
+
+    background: #bdbbb7;
+}
+
+.habbicons-collection-row {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr) 22px;
+    align-items: center;
+    gap: 6px;
+
+    padding: 7px;
+
+    border: none;
+    border-bottom: 1px solid #8c8983;
+
+    background: #e7e3d9;
+
+    color: #383632;
+    text-align: left;
+
+    cursor: pointer;
+}
+
+.habbicons-collection-row.active {
+    background: #ebcf99;
+}
+
+.habbicons-collection-avatar {
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #f3d37d;
+
+    font-size: 30px;
+
+    filter: drop-shadow(1px 1px 0 rgba(0, 0, 0, .2));
+}
+
+.habbicons-collection-info {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.habbicons-collection-info strong {
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    font-size: 14px;
+}
+
+.habbicons-mini-progress {
+    height: 11px;
+
+    overflow: hidden;
+
+    border: 1px solid #283a41;
+    border-radius: 4px;
+
+    background: #4d626c;
+}
+
+.habbicons-mini-progress > span {
+    display: block;
+
+    height: 100%;
+
+    background: #43a858;
+}
+
+.habbicons-favorite,
+.habbicons-title-favorite {
+    color: #8c8678;
+}
+
+.habbicons-favorite.active,
+.habbicons-title-favorite.active {
+    color: #d39a13;
+}
+
+.habbicons-title-favorite {
+    border: 0;
+    background: transparent;
+
+    font-size: 24px;
+
+    cursor: pointer;
+}
+
+.habbicons-empty-list {
+    padding: 14px;
+
+    color: #666;
+    font-size: 13px;
+    text-align: center;
+}
+
+.habbicons-collection-content {
+    min-width: 0;
+    min-height: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    border-radius: 8px;
+
+    background: #eee1c6;
+}
+
+.habbicons-collection-title {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 12px;
+
+    padding: 12px 16px 7px;
+}
+
+.habbicons-collection-title h3 {
+    margin: 0 0 2px;
+
+    color: #3a3834;
+    font-size: 22px;
+}
+
+.habbicons-collection-title p {
+    margin: 0;
+
+    color: #665f55;
+    font-size: 13px;
+}
+
+.habbicons-selected-progress {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 8px 16px 11px;
+}
+
+.habbicons-selected-progress .habbicons-progress-track {
+    max-width: 225px;
+}
+
+.habbicons-content-lower {
+    min-height: 0;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 150px;
+    gap: 18px;
+
+    flex: 1;
+
+    padding: 10px;
+
+    border-radius: 9px 9px 0 0;
+
+    background: #f8f0df;
+}
+
+.habbicons-grid {
+    align-content: start;
+
+    display: grid;
+    grid-template-columns: repeat(4, minmax(52px, 1fr));
+    gap: 6px;
+
+    overflow-y: auto;
+}
+
+.habbicon-cell {
+    position: relative;
+
+    aspect-ratio: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    border-radius: 8px;
+
+    background: #eee4ca;
+
+    font-size: clamp(28px, 4vw, 40px);
+}
+
+.habbicon-cell.locked span:first-child {
+    opacity: .36;
+    filter: grayscale(.7);
+}
+
+.habbicon-lock-overlay {
+    position: absolute;
+    inset: 0;
+
+    background: rgba(230, 220, 190, .25);
+}
+
+.habbicon-cell.owned {
+    background: #fff4c8;
+
+    box-shadow:
+        inset 0 0 0 2px #e4bd4c,
+        0 1px 1px rgba(0, 0, 0, .15);
+}
+
+.habbicons-reward {
+    align-self: start;
+
+    padding: 10px;
+
+    border-radius: 7px;
+
+    background: #ead6a9;
+
+    color: #5a5141;
+    text-align: center;
+}
+
+.habbicons-reward h4 {
+    margin: 0 0 8px;
+
+    font-size: 14px;
+}
+
+.habbicons-reward-icon {
+    width: 58px;
+    height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 8px;
+
+    border-radius: 5px;
+
+    background: #fff7e3;
+
+    font-size: 40px;
+}
+
+.habbicons-reward p {
+    margin: 0 0 10px;
+
+    font-size: 12px;
+    line-height: 1.2;
+}
+
+.habbicons-reward button {
+    width: 100%;
+
+    padding: 7px;
+
+    border: 1px solid #1d6c2b;
+    border-radius: 4px;
+
+    background: #2f913d;
+
+    color: #fff;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.habbicons-reward button:disabled {
+    border-color: #808080;
+
+    background: #9a9a9a;
+
+    color: #d9d9d9;
+
+    cursor: not-allowed;
+}
+
+@media (max-width: 700px) {
+    .habbicons-window {
+        max-height: calc(100vh - 12px);
+    }
+
+    .habbicons-hero-left {
+        padding-right: 0;
+    }
+
+    .habbicons-stat-cards {
+        position: static;
+
+        margin-top: 12px;
+    }
+
+    .habbicons-stat-card {
+        flex: 1;
+        width: auto;
+    }
+
+    .habbicons-total-progress {
+        margin: 12px 0 0;
+    }
+
+    .habbicons-body {
+        grid-template-columns: 145px minmax(0, 1fr);
+    }
+
+    .habbicons-content-lower {
+        grid-template-columns: 1fr;
+        overflow-y: auto;
+    }
+
+    .habbicons-reward {
+        width: 100%;
+    }
+}
+
+@media (max-width: 520px) {
+    .habbicons-window-backdrop {
+        padding: 5px;
+    }
+
+    .habbicons-window {
+        width: calc(100vw - 10px);
+        max-height: calc(100vh - 10px);
+    }
+
+    .habbicons-tabs {
+        padding-left: 6px;
+        padding-right: 6px;
+    }
+
+    .habbicons-tabs button {
+        flex: 1;
+
+        padding: 6px 4px;
+
+        font-size: 11px;
+    }
+
+    .habbicons-body {
+        grid-template-columns: 1fr;
+        overflow-y: auto;
+    }
+
+    .habbicons-collection-list {
+        max-height: 150px;
+    }
+
+    .habbicons-grid {
+        grid-template-columns: repeat(4, minmax(44px, 1fr));
+    }
+}
+
+
+/* ========================================= */
+/* JANELA ARRASTÁVEL                          */
+/* ========================================= */
+
+.habbicons-window {
+    will-change: transform;
+}
+
+.habbicons-window-header {
+    cursor: grab;
+    user-select: none;
+}
+
+.habbicons-window-header:active {
+    cursor: grabbing;
+}
+
+body.habbicons-is-dragging,
+body.habbicons-is-dragging * {
+    cursor: grabbing !important;
+    user-select: none !important;
+}
+
+.habbicons-close-button {
+    cursor: pointer !important;
+}

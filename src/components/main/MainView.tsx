@@ -27,6 +27,8 @@ import { ToolbarView } from '../toolbar/ToolbarView';
 import { UserProfileView } from '../user-profile/UserProfileView';
 import { UserSettingsView } from '../user-settings/UserSettingsView';
 import { WiredView } from '../wired/WiredView';
+import { WiredToolView } from '../wired-tool/WiredToolView';
+
 
 
 
@@ -109,6 +111,7 @@ export const MainView: FC<{}> = props =>
             <HcCenterView />
             <CampaignView />
             <GameCenterView />
+            <WiredToolView />
             <FloorplanEditorView />
       
         </Base>

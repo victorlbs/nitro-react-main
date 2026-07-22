@@ -61,9 +61,7 @@ export const LoadingView: FC<LoadingViewProps> = props => {
                             draggable={ false }
                         />
 
-                        <div className="loading-habbo-logo">
-                            Habbriol
-                        </div>
+                       
                     </div>
                 </div>
             </div>

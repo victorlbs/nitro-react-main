@@ -1,3 +1,8 @@
+$avatar-editor-width: 820px !default;
+$avatar-editor-height: 575px !default;
+$pale-sky: #d8e2e9 !default;
+$white: #ffffff !default;
+
 .nitro-avatar-editor-spritesheet {
     background: url('@/assets/images/avatareditor/avatar-editor-spritesheet.png') transparent no-repeat;
 
@@ -332,5 +337,626 @@
             box-shadow: 0 0 8px 2px rgba($white,.6);
             transform: scale(2);
         }
+    }
+}
+
+/* ============================================================
+   Avatar Editor - UX melhorado estilo guarda-roupa antigo
+   Cole este bloco no final do seu AvatarEditorView.scss
+   ============================================================ */
+
+.nitro-avatar-editor.avatar-editor-improved {
+    width: 860px;
+    height: 610px;
+    min-width: 780px;
+    min-height: 560px;
+    max-width: calc(100vw - 30px);
+    max-height: calc(100vh - 30px);
+    resize: both;
+    background: #d8e2e9 !important;
+    border: 2px solid #111 !important;
+    border-radius: 7px !important;
+    overflow: auto !important;
+    color: #111 !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .45) !important;
+
+    .nitro-card-header {
+        height: 40px !important;
+        background: #247e9d !important;
+        border-bottom: 2px solid #155a70 !important;
+        color: #fff !important;
+        font-size: 23px !important;
+        font-weight: 800 !important;
+        text-align: center !important;
+        text-shadow: 0 1px 0 rgba(0, 0, 0, .55) !important;
+    }
+
+    .avatar-editor-tabs-wrapper {
+        height: 45px;
+        background: #17677f;
+        border-bottom: 2px solid #b7c5ce;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        padding: 0 10px;
+
+        .nav-tabs,
+        .nitro-card-tabs,
+        .tabs {
+            border: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            gap: 6px;
+            align-items: flex-end;
+        }
+
+        .nav-item,
+        .nitro-card-tabs-item,
+        .tab {
+            min-width: 105px;
+            height: 36px;
+            border: 2px solid #677680 !important;
+            border-bottom: 0 !important;
+            border-radius: 6px 6px 0 0 !important;
+            background: linear-gradient(#d9e1e6, #b5c0c8) !important;
+            color: #111 !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 0 13px !important;
+        }
+
+        .active,
+        .nav-link.active,
+        .nitro-card-tabs-item.active {
+            background: #f5f5f0 !important;
+            color: #000 !important;
+            border-color: #4d5c65 !important;
+        }
+    }
+
+    .avatar-editor-content {
+        padding: 0 !important;
+        background: #d8e2e9 !important;
+        overflow: hidden !important;
+    }
+
+    .avatar-editor-toolbar {
+        height: 55px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 8px 12px;
+        background: #eef3f6;
+        border-bottom: 1px solid #b6c3cc;
+    }
+
+    .avatar-editor-toolbar-info {
+        min-width: 0;
+    }
+
+    .avatar-editor-toolbar-title {
+        font-size: 17px;
+        line-height: 19px;
+        font-weight: 900;
+        color: #111;
+    }
+
+    .avatar-editor-toolbar-subtitle {
+        max-width: 435px;
+        margin-top: 2px;
+        font-size: 12px;
+        line-height: 15px;
+        color: #46545d;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    &.has-changes .avatar-editor-toolbar-subtitle {
+        color: #8a4c00;
+        font-weight: 700;
+    }
+
+    .avatar-editor-gender-switch {
+        display: flex;
+        gap: 6px;
+        background: #c7d3dc;
+        border: 1px solid #a8b7c1;
+        border-radius: 7px;
+        padding: 4px;
+        flex-shrink: 0;
+
+        button {
+            height: 29px;
+            min-width: 78px;
+            border: 1px solid #7b8b95;
+            border-radius: 5px;
+            background: #e8eef2;
+            color: #26333b;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        button.active {
+            background: #2382a1;
+            color: #fff;
+            border-color: #0d536a;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35);
+        }
+    }
+
+    .avatar-editor-main-layout {
+        height: calc(100% - 55px);
+        display: grid;
+        grid-template-columns: 1fr 205px;
+        gap: 10px;
+        padding: 10px;
+        min-height: 0;
+    }
+
+    .avatar-editor-left-panel,
+    .avatar-editor-preview-panel {
+        min-height: 0;
+        min-width: 0;
+    }
+
+    .avatar-editor-model-frame {
+        height: 100%;
+        min-height: 0;
+        background: #c4d0d9;
+        border: 2px solid #aebdc7;
+        border-radius: 8px;
+        padding: 8px;
+        overflow: hidden;
+    }
+
+    .avatar-editor-preview-panel {
+        display: flex;
+        flex-direction: column;
+        background: #d5dde4;
+        border: 2px solid #aebdc7;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .avatar-editor-preview-header {
+        height: 34px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 10px;
+        background: #eef3f6;
+        border-bottom: 1px solid #b6c3cc;
+        color: #111;
+        font-size: 14px;
+        font-weight: 900;
+
+        b {
+            padding: 2px 6px;
+            border-radius: 5px;
+            background: #ffdc7a;
+            border: 1px solid #bc8b00;
+            color: #5a3b00;
+            font-size: 10px;
+            text-transform: uppercase;
+        }
+    }
+
+    .avatar-editor-preview-stage {
+        height: 300px;
+        min-height: 0;
+        background: linear-gradient(180deg, #768492 0%, #65727f 100%);
+        border-bottom: 2px solid #b6c3cc;
+        overflow: hidden;
+
+        .figure-preview-container {
+            height: 100% !important;
+            background:
+                radial-gradient(ellipse at bottom, rgba(255, 255, 255, .42) 0%, rgba(255, 255, 255, .18) 36%, transparent 38%),
+                linear-gradient(180deg, #768492 0%, #65727f 100%) !important;
+        }
+
+        .figure-preview-container .avatar-image {
+            bottom: 46px !important;
+        }
+
+        .figure-preview-container .avatar-shadow {
+            bottom: 22px !important;
+        }
+    }
+
+    .avatar-editor-preview-controls {
+        padding: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        background: #dbe3e9;
+
+        .btn-group {
+            width: 100%;
+            display: grid !important;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+        }
+
+        .btn-group .btn,
+        > .btn {
+            min-height: 34px;
+            font-weight: 800;
+            border-radius: 5px !important;
+        }
+    }
+
+    .avatar-editor-save-button {
+        height: 38px !important;
+        border: 2px solid #006100 !important;
+        background: linear-gradient(#0bb01a, #00860d) !important;
+        color: #fff !important;
+        font-weight: 900 !important;
+        text-shadow: 0 1px 0 rgba(0, 0, 0, .55);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35), 0 2px 0 rgba(0, 0, 0, .22);
+    }
+
+    &.has-changes .avatar-editor-save-button {
+        animation: avatar-editor-save-pulse 1.4s ease-in-out infinite;
+    }
+
+    .avatar-editor-shortcuts {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 3px;
+        padding: 0 8px 8px;
+        color: #52616b;
+        font-size: 11px;
+        line-height: 14px;
+    }
+
+    /* Ajustes em grids internos sem alterar os arquivos das views */
+    .category-item {
+        height: 45px !important;
+        border-radius: 7px !important;
+        background: #e8eef2 !important;
+        border: 2px solid #b2c0ca !important;
+    }
+
+    .category-item:hover {
+        background: #fff !important;
+    }
+
+    .category-item.active,
+    .category-item.selected {
+        background: #fff !important;
+        border-color: #2083a3 !important;
+        box-shadow: inset 0 0 0 2px #5bc1df;
+    }
+
+    .avatar-editor-model-frame .grid,
+    .avatar-editor-model-frame .auto-grid,
+    .avatar-editor-model-frame .avatar-editor-grid,
+    .avatar-editor-model-frame .avatar-editor-parts,
+    .avatar-editor-model-frame .avatar-editor-parts-grid {
+        scrollbar-width: thin;
+        scrollbar-color: #77aabd #d3dde5;
+    }
+
+    .avatar-editor-model-frame ::-webkit-scrollbar {
+        width: 12px;
+        height: 12px;
+    }
+
+    .avatar-editor-model-frame ::-webkit-scrollbar-track {
+        background: #d3dde5;
+        border-radius: 10px;
+    }
+
+    .avatar-editor-model-frame ::-webkit-scrollbar-thumb {
+        background: #77aabd;
+        border: 3px solid #d3dde5;
+        border-radius: 10px;
+    }
+
+    .avatar-editor-model-frame .btn,
+    .avatar-editor-model-frame button {
+        transition: transform .08s ease, background .08s ease, box-shadow .08s ease;
+    }
+
+    .avatar-editor-model-frame .btn:hover,
+    .avatar-editor-model-frame button:hover {
+        transform: translateY(-1px);
+    }
+}
+
+@keyframes avatar-editor-save-pulse {
+    0%, 100% {
+        filter: brightness(1);
+    }
+
+    50% {
+        filter: brightness(1.14);
+    }
+}
+
+
+/* ============================================================
+   Avatar Editor UX Plus: favoritos, recentes, copiar/colar e presets
+   ============================================================ */
+
+.nitro-avatar-editor.avatar-editor-ux-plus {
+    width: 860px;
+    height: 610px;
+    min-width: 780px;
+    min-height: 560px;
+    max-width: calc(100vw - 30px);
+    max-height: calc(100vh - 30px);
+    resize: both;
+    overflow: auto !important;
+
+    .avatar-editor-content {
+        height: calc(100% - 85px) !important;
+        overflow: hidden !important;
+    }
+
+    .avatar-editor-toolbar {
+        height: 52px;
+    }
+
+    .avatar-editor-quickbar {
+        height: 39px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 8px;
+        background: #d0dbe3;
+        border-bottom: 1px solid #aebdc7;
+        overflow-x: auto;
+        overflow-y: hidden;
+
+        button {
+            height: 28px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 0 9px;
+            border: 1px solid #768893;
+            border-radius: 5px;
+            background: linear-gradient(#ffffff, #d9e3ea);
+            color: #1b2a33;
+            font-size: 12px;
+            font-weight: 800;
+            white-space: nowrap;
+            cursor: pointer;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .75);
+        }
+
+        button:hover {
+            background: #fff;
+            transform: translateY(-1px);
+        }
+
+        button.active {
+            background: #2483a4;
+            border-color: #11566d;
+            color: #fff;
+        }
+
+        button.favorite-active {
+            background: linear-gradient(#ffc84a, #e7a800);
+            border-color: #9b6b00;
+            color: #3f2a00;
+        }
+    }
+
+    .avatar-editor-main-layout {
+        height: calc(100% - 91px) !important;
+        grid-template-columns: minmax(0, 1fr) 210px;
+    }
+
+    .avatar-editor-left-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .avatar-editor-utility-panel {
+        max-height: 170px;
+        min-height: 112px;
+        background: #eef3f6;
+        border: 2px solid #aebdc7;
+        border-radius: 8px;
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+
+    .avatar-editor-utility-panel-header {
+        height: 34px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 0 8px;
+        background: #d9e3ea;
+        border-bottom: 1px solid #b6c3cc;
+        color: #111;
+
+        b {
+            font-size: 14px;
+            font-weight: 900;
+        }
+
+        div {
+            display: flex;
+            gap: 6px;
+        }
+
+        button {
+            height: 24px;
+            padding: 0 8px;
+            border: 1px solid #73848e;
+            border-radius: 4px;
+            background: #fff;
+            color: #111;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+    }
+
+    .avatar-editor-look-list {
+        max-height: 132px;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 6px;
+        padding: 7px;
+        overflow-y: auto;
+    }
+
+    .avatar-editor-look-empty {
+        grid-column: 1 / -1;
+        padding: 18px 8px;
+        color: #52616b;
+        font-size: 13px;
+        font-weight: 800;
+        text-align: center;
+    }
+
+    .avatar-editor-look-card {
+        min-width: 0;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 72px;
+        gap: 6px;
+        padding: 6px;
+        background: #fff;
+        border: 1px solid #c0ccd5;
+        border-radius: 6px;
+        box-shadow: 0 1px 0 rgba(0, 0, 0, .08);
+    }
+
+    .avatar-editor-look-card-info {
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+
+        b {
+            color: #111;
+            font-size: 12px;
+            line-height: 15px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        span {
+            color: #247e9d;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        small {
+            color: #65737d;
+            font-size: 10px;
+            line-height: 12px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
+    .avatar-editor-look-card-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+
+        button {
+            height: 22px;
+            border: 1px solid #0d536a;
+            border-radius: 4px;
+            background: #247e9d;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 900;
+            cursor: pointer;
+        }
+
+        button.danger {
+            border-color: #8b1515;
+            background: #c92a24;
+        }
+    }
+
+    .avatar-editor-import-box {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding: 8px;
+
+        textarea {
+            width: 100%;
+            height: 58px;
+            padding: 7px;
+            resize: none;
+            border: 1px solid #8fa0ab;
+            border-radius: 5px;
+            background: #fff;
+            color: #111;
+            font-size: 12px;
+            outline: none;
+        }
+
+        small {
+            color: #52616b;
+            font-size: 11px;
+        }
+    }
+
+    .avatar-editor-import-actions {
+        display: flex;
+        gap: 6px;
+
+        button {
+            height: 27px;
+            padding: 0 10px;
+            border: 1px solid #0d536a;
+            border-radius: 5px;
+            background: #247e9d;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 900;
+            cursor: pointer;
+        }
+    }
+
+    .avatar-editor-model-frame {
+        flex: 1;
+        min-height: 0;
+    }
+
+    .avatar-editor-preview-figure-string {
+        height: 34px;
+        margin: 6px 8px 0;
+        padding: 5px 7px;
+        border: 1px solid #aebdc7;
+        border-radius: 5px;
+        background: #eef3f6;
+        color: #40515c;
+        font-size: 10px;
+        line-height: 12px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: break-all;
+    }
+
+    .avatar-editor-preview-stage {
+        height: 265px;
+    }
+
+    .avatar-editor-preview-controls {
+        padding-top: 6px;
     }
 }

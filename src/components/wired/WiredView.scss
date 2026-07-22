@@ -173,3 +173,145 @@
 		background-position: 0 -197.99px;
 	}
 }
+
+
+.wired-area-selector-view {
+    color: #111;
+}
+
+.wired-area-selector-toolbar {
+    height: 38px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 4px 2px;
+}
+
+.wired-area-tool-button {
+    width: 31px;
+    height: 31px;
+    border: 2px solid #1d1d1d;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 900;
+    line-height: 23px;
+    cursor: pointer;
+    text-align: center;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .45),
+        inset 0 -2px 0 rgba(0, 0, 0, .25);
+}
+
+.wired-area-tool-button.add {
+    background: #158500;
+}
+
+.wired-area-tool-button.clear {
+    background: #d83232;
+}
+
+.wired-area-tool-button.target {
+    background: #1b8eb3;
+    font-size: 18px;
+}
+
+.wired-area-tool-separator {
+    width: 1px;
+    height: 32px;
+    margin: 0 8px;
+    background: #9b9b9b;
+}
+
+.wired-area-floor-wrapper {
+    position: relative;
+    height: 228px;
+    background: #3d3d3d;
+    border: 1px solid #2b2b2b;
+    overflow: hidden;
+}
+
+.wired-area-floor {
+    width: 100%;
+    height: 210px;
+    display: block;
+    cursor: crosshair;
+}
+
+.wired-area-tile {
+    fill: #080808;
+    stroke: #1d1d1d;
+    stroke-width: .8;
+    cursor: pointer;
+    transition: fill .05s linear, stroke .05s linear;
+}
+
+.wired-area-tile:hover {
+    fill: #171717;
+    stroke: #ffffff;
+    stroke-width: 1.2;
+}
+
+.wired-area-tile.selected {
+    fill: #1b8eb3;
+    fill-opacity: .62;
+    stroke: #84dfff;
+    stroke-width: 1;
+}
+
+.wired-area-tile.corner {
+    fill: #ffffff;
+    fill-opacity: .9;
+    stroke: #ffffff;
+    stroke-width: 1.4;
+}
+
+.wired-area-coordinates {
+    position: absolute;
+    right: 4px;
+    bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.wired-area-coordinates input {
+    width: 38px;
+    height: 25px;
+    border: 1px solid #dadada;
+    border-radius: 3px;
+    background: #3e3e3e;
+    color: #fff;
+    text-align: center;
+    font-size: 13px;
+}
+
+.wired-area-selected-info {
+    min-height: 22px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #111;
+    font-size: 13px;
+}
+
+.wired-area-options {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding-top: 8px;
+    border-top: 1px solid #999;
+}
+
+.wired-area-options label {
+    cursor: pointer;
+}
+
+.wired-area-options input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}

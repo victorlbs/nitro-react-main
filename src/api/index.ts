@@ -27,4 +27,4 @@ export * from './room';
 export * from './user';
 export * from './utils';
 export * from './wired';
-
+export * from './wired-tool';

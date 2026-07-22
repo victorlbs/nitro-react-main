@@ -1,5 +1,5 @@
 import { FlatControllerAddedEvent, FlatControllerRemovedEvent, FlatControllersEvent, RemoveAllRightsMessageComposer, RoomTakeRightsComposer, RoomUsersWithRightsComposer } from '@nitrots/nitro-renderer';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { IRoomData, LocalizeText, SendMessageComposer } from '../../../../api';
 import { Button, Column, Flex, Grid, Text, UserProfileIconView } from '../../../../common';
 import { useMessageEvent } from '../../../../hooks';
@@ -14,6 +14,18 @@ export const NavigatorRoomSettingsRightsTabView: FC<NavigatorRoomSettingsTabView
 {
     const { roomData = null } = props;
     const [ usersWithRights, setUsersWithRights ] = useState<Map<number, string>>(new Map());
+    const [ selectedUserId, setSelectedUserId ] = useState<number>(-1);
+    const [ searchValue, setSearchValue ] = useState('');
+
+    const filteredUsers = useMemo(() =>
+    {
+        const search = searchValue.trim().toLowerCase();
+        const users = Array.from(usersWithRights.entries());
+
+        if(!search) return users;
+
+        return users.filter(([ id, name ]) => name.toLowerCase().includes(search));
+    }, [ usersWithRights, searchValue ]);
 
     useMessageEvent<FlatControllersEvent>(FlatControllersEvent, event =>
     {
@@ -53,7 +65,9 @@ export const NavigatorRoomSettingsRightsTabView: FC<NavigatorRoomSettingsTabView
             newValue.delete(parser.userId);
 
             return newValue;
-        }); 
+        });
+
+        if(selectedUserId === parser.userId) setSelectedUserId(-1);
     });
 
     useEffect(() =>
@@ -62,30 +76,51 @@ export const NavigatorRoomSettingsRightsTabView: FC<NavigatorRoomSettingsTabView
     }, [ roomData.roomId ]);
 
     return (
-        <Grid>
-            <Column size={ 6 }>
-                <Text bold>
-                    { LocalizeText('navigator.flatctrls.userswithrights', [ 'displayed', 'total' ], [ usersWithRights.size.toString(), usersWithRights.size.toString() ]) }
-                </Text>
-                <Flex overflow="hidden" className="bg-white rounded list-container p-2">
+        <Grid className="room-settings-rights-ux" overflow="hidden">
+            <Column size={ 7 } className="room-settings-card" gap={ 2 } overflow="hidden">
+                <Flex justifyContent="between" alignItems="center" gap={ 2 }>
+                    <Column gap={ 0 }>
+                        <Text bold>{ LocalizeText('navigator.flatctrls.userswithrights', [ 'displayed', 'total' ], [ filteredUsers.length.toString(), usersWithRights.size.toString() ]) }</Text>
+                        <Text small>Selecione um usuário para remover os direitos.</Text>
+                    </Column>
+                </Flex>
+
+                <input className="form-control form-control-sm" placeholder="Buscar usuário com direitos..." value={ searchValue } onChange={ event => setSearchValue(event.target.value) } />
+
+                <Flex overflow="hidden" className="room-settings-user-list">
                     <Column fullWidth overflow="auto" gap={ 1 }>
-                        { Array.from(usersWithRights.entries()).map(([ id, name ], index) =>
+                        { filteredUsers.map(([ id, name ], index) =>
                         {
                             return (
-                                <Flex key={ index } shrink alignItems="center" gap={ 1 } overflow="hidden">
+                                <Flex key={ index } shrink alignItems="center" gap={ 1 } overflow="hidden" className={ `room-settings-user-row${ selectedUserId === id ? ' active' : '' }` } onClick={ event => setSelectedUserId(id) }>
                                     <UserProfileIconView userName={ name } />
-                                    <Text pointer grow onClick={ event => SendMessageComposer(new RoomTakeRightsComposer(id)) }> { name }</Text>
+                                    <Text pointer grow truncate>{ name }</Text>
                                 </Flex>
                             );
                         }) }
                     </Column>
                 </Flex>
             </Column>
-            <Column size={ 6 } justifyContent="end">
-                <Button variant="danger" disabled={ !usersWithRights.size } onClick={ event => SendMessageComposer(new RemoveAllRightsMessageComposer(roomData.roomId)) } >
-                    { LocalizeText('navigator.flatctrls.clear') }
-                </Button>
+
+            <Column size={ 5 } className="room-settings-card" justifyContent="between" gap={ 2 }>
+                <Column gap={ 1 }>
+                    <Text bold>Ações</Text>
+                    <Text small>{ selectedUserId > 0 ? `Selecionado: ${ usersWithRights.get(selectedUserId) }` : 'Nenhum usuário selecionado.' }</Text>
+                </Column>
+
+                <Column gap={ 1 }>
+                    <Button disabled={ selectedUserId <= 0 } onClick={ event =>
+                    {
+                        SendMessageComposer(new RoomTakeRightsComposer(selectedUserId));
+                        setSelectedUserId(-1);
+                    } }>
+                        Remover selecionado
+                    </Button>
+                    <Button variant="danger" disabled={ !usersWithRights.size } onClick={ event => SendMessageComposer(new RemoveAllRightsMessageComposer(roomData.roomId)) }>
+                        { LocalizeText('navigator.flatctrls.clear') }
+                    </Button>
+                </Column>
             </Column>
         </Grid>
     );
-}
+};

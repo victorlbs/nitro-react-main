@@ -2,6 +2,7 @@ import { ILinkEventTracker, NitroSettingsEvent, UserSettingsCameraFollowComposer
 import { FC, useEffect, useState } from 'react';
 import { FaVolumeDown, FaVolumeMute, FaVolumeUp } from 'react-icons/fa';
 import { AddEventLinkTracker, DispatchMainEvent, DispatchUiEvent, LocalizeText, RemoveLinkEventTracker, SendMessageComposer } from '../../api';
+import { AdvancedClientSettings, ApplyAdvancedClientSettings, LoadAdvancedClientSettings, SaveAdvancedClientSettings } from '../../api/user-settings';
 import { ApplyVideoSettingsRuntime, LoadVideoSettings, SaveVideoSettings, VIDEO_SETTINGS_DEFAULT, VideoSettings } from '../../api/video-settings';
 import { classNames, Column, Flex, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../common';
 import { useCatalogPlaceMultipleItems, useCatalogSkipPurchaseConfirmation, useMessageEvent } from '../../hooks';
@@ -15,6 +16,7 @@ export const UserSettingsView: FC<{}> = props =>
     const [ activeTab, setActiveTab ] = useState<SettingsTab>('general');
     const [ userSettings, setUserSettings ] = useState<any>(null);
     const [ videoSettings, setVideoSettings ] = useState<VideoSettings>(() => LoadVideoSettings());
+    const [ advancedClientSettings, setAdvancedClientSettings ] = useState<AdvancedClientSettings>(() => LoadAdvancedClientSettings());
 
     const [ catalogPlaceMultipleObjects, setCatalogPlaceMultipleObjects ] = useCatalogPlaceMultipleItems();
     const [ catalogSkipPurchaseConfirmation, setCatalogSkipPurchaseConfirmation ] = useCatalogSkipPurchaseConfirmation();
@@ -73,6 +75,17 @@ export const UserSettingsView: FC<{}> = props =>
         DispatchMainEvent(clone);
     };
 
+    const updateAdvancedClientSetting = <K extends keyof AdvancedClientSettings>(key: K, value: AdvancedClientSettings[K]) =>
+    {
+        setAdvancedClientSettings(prevValue =>
+        {
+            return SaveAdvancedClientSettings({
+                ...prevValue,
+                [key]: value
+            });
+        });
+    };
+
     const saveRangeSlider = (type: string) =>
     {
         if(!userSettings) return;
@@ -93,12 +106,10 @@ export const UserSettingsView: FC<{}> = props =>
     {
         setVideoSettings(prevValue =>
         {
-            const nextValue = SaveVideoSettings({
+            return SaveVideoSettings({
                 ...prevValue,
                 [key]: value
             });
-
-            return nextValue;
         });
     };
 
@@ -163,6 +174,11 @@ export const UserSettingsView: FC<{}> = props =>
 
     useEffect(() =>
     {
+        ApplyAdvancedClientSettings(advancedClientSettings);
+    }, [ advancedClientSettings ]);
+
+    useEffect(() =>
+    {
         if(!userSettings) return;
 
         DispatchUiEvent(userSettings);
@@ -213,17 +229,92 @@ export const UserSettingsView: FC<{}> = props =>
                     }
 
                     { activeTab === 'advanced' &&
-                        <Column gap={ 2 }>
+                        <div className="advanced-client-settings-panel">
                             <label className="settings-check-row">
-                                <input type="checkbox" checked={ catalogPlaceMultipleObjects } onChange={ event => setCatalogPlaceMultipleObjects(event.target.checked) } />
+                                <input
+                                    type="checkbox"
+                                    checked={ advancedClientSettings.showFurniDetails }
+                                    onChange={ event => updateAdvancedClientSetting('showFurniDetails', event.target.checked) }
+                                />
+                                <span>Ver detalhes do mobi</span>
+                            </label>
+
+                            <label className="settings-check-row">
+                                <input
+                                    type="checkbox"
+                                    checked={ advancedClientSettings.wiredAdvancedAlwaysOn }
+                                    onChange={ event => updateAdvancedClientSetting('wiredAdvancedAlwaysOn', event.target.checked) }
+                                />
+                                <span>Opções avançadas dos wireds sempre ativas</span>
+                            </label>
+
+                            <label className="settings-check-row">
+                                <input
+                                    type="checkbox"
+                                    checked={ advancedClientSettings.groupRepeatedMessages }
+                                    onChange={ event => updateAdvancedClientSetting('groupRepeatedMessages', event.target.checked) }
+                                />
+                                <span>Agrupar mensagens repetidas</span>
+                            </label>
+
+                            <label className="settings-check-row">
+                                <input
+                                    type="checkbox"
+                                    checked={ advancedClientSettings.zoomWithScroll }
+                                    onChange={ event => updateAdvancedClientSetting('zoomWithScroll', event.target.checked) }
+                                />
+                                <span>Zoom no quarto ao usar o scroll</span>
+                            </label>
+
+                            <label className="settings-check-row">
+                                <input
+                                    type="checkbox"
+                                    checked={ advancedClientSettings.showFps }
+                                    onChange={ event => updateAdvancedClientSetting('showFps', event.target.checked) }
+                                />
+                                <span>Mostrar FPS</span>
+                            </label>
+
+                            <label className="settings-check-row">
+                                <input
+                                    type="checkbox"
+                                    checked={ advancedClientSettings.showPing }
+                                    onChange={ event => updateAdvancedClientSetting('showPing', event.target.checked) }
+                                />
+                                <span>Mostrar Ping</span>
+                            </label>
+
+                            <label className="settings-check-row">
+                                <input
+                                    type="checkbox"
+                                    checked={ catalogPlaceMultipleObjects }
+                                    onChange={ event => setCatalogPlaceMultipleObjects(event.target.checked) }
+                                />
                                 <span>{ LocalizeText('memenu.settings.other.place.multiple.objects') }</span>
                             </label>
 
                             <label className="settings-check-row">
-                                <input type="checkbox" checked={ catalogSkipPurchaseConfirmation } onChange={ event => setCatalogSkipPurchaseConfirmation(event.target.checked) } />
+                                <input
+                                    type="checkbox"
+                                    checked={ catalogSkipPurchaseConfirmation }
+                                    onChange={ event => setCatalogSkipPurchaseConfirmation(event.target.checked) }
+                                />
                                 <span>{ LocalizeText('memenu.settings.other.skip.purchase.confirmation') }</span>
                             </label>
-                        </Column>
+
+                            <div className="settings-select-row">
+                                <span>Clique individual:</span>
+
+                                <select
+                                    value={ advancedClientSettings.individualClickMode }
+                                    onChange={ event => updateAdvancedClientSetting('individualClickMode', event.target.value as AdvancedClientSettings['individualClickMode']) }
+                                >
+                                    <option value="none">Nenhum</option>
+                                    <option value="original">Clique original</option>
+                                    <option value="events">Clique de eventos</option>
+                                </select>
+                            </div>
+                        </div>
                     }
 
                     { activeTab === 'audio' &&

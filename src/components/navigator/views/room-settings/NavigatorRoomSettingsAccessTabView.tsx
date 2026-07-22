@@ -9,6 +9,33 @@ interface NavigatorRoomSettingsTabViewProps
     handleChange: (field: string, value: string | number | boolean) => void;
 }
 
+const ACCESS_OPTIONS = [
+    {
+        state: RoomDataParser.OPEN_STATE,
+        title: 'Aberto',
+        desc: 'Qualquer usuário pode entrar no quarto.',
+        icon: '🔓'
+    },
+    {
+        state: RoomDataParser.DOORBELL_STATE,
+        title: 'Campainha',
+        desc: 'Você escolhe quem pode entrar.',
+        icon: '🔔'
+    },
+    {
+        state: RoomDataParser.INVISIBLE_STATE,
+        title: 'Invisível',
+        desc: 'O quarto fica oculto na navegação.',
+        icon: '👻'
+    },
+    {
+        state: RoomDataParser.PASSWORD_STATE,
+        title: 'Senha',
+        desc: 'Apenas usuários com a senha entram.',
+        icon: '🔑'
+    }
+];
+
 export const NavigatorRoomSettingsAccessTabView: FC<NavigatorRoomSettingsTabViewProps> = props =>
 {
     const { roomData = null, handleChange = null } = props;
@@ -21,68 +48,80 @@ export const NavigatorRoomSettingsAccessTabView: FC<NavigatorRoomSettingsTabView
         if(!isTryingPassword || ((password.length <= 0) || (confirmPassword.length <= 0) || (password !== confirmPassword))) return;
 
         handleChange('password', password);
-    }
+    };
+
+    const selectAccessState = (state: number) =>
+    {
+        if(state === RoomDataParser.PASSWORD_STATE)
+        {
+            setIsTryingPassword(true);
+            handleChange('lock_state', state);
+            return;
+        }
+
+        setIsTryingPassword(false);
+        handleChange('lock_state', state);
+    };
 
     useEffect(() =>
     {
         setPassword('');
         setConfirmPassword('');
-        setIsTryingPassword(false);
+        setIsTryingPassword(roomData.lockState === RoomDataParser.PASSWORD_STATE);
     }, [ roomData ]);
 
     return (
-        <>
-            <Column gap={ 1 }>
-                <Text bold>{ LocalizeText('navigator.roomsettings.roomaccess.caption') }</Text>
-                <Text>{ LocalizeText('navigator.roomsettings.roomaccess.info') }</Text>
-            </Column>
-            <Column overflow="auto">
-                <Column gap={ 1 }>
-                    <Text bold>{ LocalizeText('navigator.roomsettings.doormode') }</Text>
-                    <Flex alignItems="center" gap={ 1 }>
-                        <input className="form-check-input" type="radio" name="lockState" checked={ (roomData.lockState === RoomDataParser.OPEN_STATE) && !isTryingPassword } onChange={ event => handleChange('lock_state', RoomDataParser.OPEN_STATE) } />
-                        <Text>{ LocalizeText('navigator.roomsettings.doormode.open') }</Text>
-                    </Flex>
-                    <Flex alignItems="center" gap={ 1 }>
-                        <input className="form-check-input" type="radio" name="lockState" checked={ (roomData.lockState === RoomDataParser.DOORBELL_STATE) && !isTryingPassword } onChange={ event => handleChange('lock_state', RoomDataParser.DOORBELL_STATE) } />
-                        <Text>{ LocalizeText('navigator.roomsettings.doormode.doorbell') }</Text>
-                    </Flex>
-                    <Flex alignItems="center" gap={ 1 }>
-                        <input className="form-check-input" type="radio" name="lockState" checked={ (roomData.lockState === RoomDataParser.INVISIBLE_STATE) && !isTryingPassword } onChange={ event => handleChange('lock_state', RoomDataParser.INVISIBLE_STATE) } />
-                        <Text>{ LocalizeText('navigator.roomsettings.doormode.invisible') }</Text>
-                    </Flex>
-                    <Flex fullWidth gap={ 1 }>
-                        <input className="form-check-input" type="radio" name="lockState" checked={ (roomData.lockState === RoomDataParser.PASSWORD_STATE) || isTryingPassword } onChange={ event => setIsTryingPassword(event.target.checked) } />
-                        { !isTryingPassword && (roomData.lockState !== RoomDataParser.PASSWORD_STATE) &&
-                            <Text>{ LocalizeText('navigator.roomsettings.doormode.password') }</Text> }
-                        { (isTryingPassword || (roomData.lockState === RoomDataParser.PASSWORD_STATE)) &&
-                            <Column gap={ 1 }>
-                                <Text>{ LocalizeText('navigator.roomsettings.doormode.password') }</Text>
-                                <input type="password" className="form-control form-control-sm col-4" value={ password } onChange={ event => setPassword(event.target.value) } placeholder={ LocalizeText('navigator.roomsettings.password') } onFocus={ event => setIsTryingPassword(true) } />
-                                { isTryingPassword && (password.length <= 0) &&
-                                    <Text bold small variant="danger">
-                                        { LocalizeText('navigator.roomsettings.passwordismandatory') }
-                                    </Text> }
-                                <input type="password" className="form-control form-control-sm col-4" value={ confirmPassword } onChange={ event => setConfirmPassword(event.target.value) } onBlur={ saveRoomPassword } placeholder={ LocalizeText('navigator.roomsettings.passwordconfirm') } />
-                                { isTryingPassword && ((password.length > 0) && (password !== confirmPassword)) &&
-                                    <Text bold small variant="danger">
-                                        { LocalizeText('navigator.roomsettings.invalidconfirm') }
-                                    </Text> }
-                            </Column> }
-                    </Flex>
+        <Column gap={ 2 }>
+            <Column className="room-settings-card" gap={ 2 }>
+                <Column gap={ 0 }>
+                    <Text bold>{ LocalizeText('navigator.roomsettings.roomaccess.caption') }</Text>
+                    <Text small>{ LocalizeText('navigator.roomsettings.roomaccess.info') }</Text>
                 </Column>
-                <Column gap={ 1 }>
+
+                <div className="room-settings-access-grid">
+                    { ACCESS_OPTIONS.map(option =>
+                    {
+                        const isPassword = (option.state === RoomDataParser.PASSWORD_STATE);
+                        const active = isPassword ? ((roomData.lockState === RoomDataParser.PASSWORD_STATE) || isTryingPassword) : ((roomData.lockState === option.state) && !isTryingPassword);
+
+                        return (
+                            <button key={ option.state } type="button" className={ `room-settings-access-card${ active ? ' active' : '' }` } onClick={ () => selectAccessState(option.state) }>
+                                <span className="room-settings-access-icon">{ option.icon }</span>
+                                <b>{ option.title }</b>
+                                <small>{ option.desc }</small>
+                            </button>
+                        );
+                    }) }
+                </div>
+
+                { ((roomData.lockState === RoomDataParser.PASSWORD_STATE) || isTryingPassword) &&
+                    <Column className="room-settings-password-box" gap={ 1 }>
+                        <Text bold>{ LocalizeText('navigator.roomsettings.doormode.password') }</Text>
+                        <Flex gap={ 1 }>
+                            <input type="password" className="form-control form-control-sm" value={ password } onChange={ event => setPassword(event.target.value) } placeholder={ LocalizeText('navigator.roomsettings.password') } onFocus={ event => setIsTryingPassword(true) } />
+                            <input type="password" className="form-control form-control-sm" value={ confirmPassword } onChange={ event => setConfirmPassword(event.target.value) } onBlur={ saveRoomPassword } placeholder={ LocalizeText('navigator.roomsettings.passwordconfirm') } />
+                        </Flex>
+                        { isTryingPassword && (password.length <= 0) &&
+                            <Text bold small variant="danger">{ LocalizeText('navigator.roomsettings.passwordismandatory') }</Text> }
+                        { isTryingPassword && ((password.length > 0) && (password !== confirmPassword)) &&
+                            <Text bold small variant="danger">{ LocalizeText('navigator.roomsettings.invalidconfirm') }</Text> }
+                    </Column> }
+            </Column>
+
+            <Column className="room-settings-card" gap={ 2 }>
+                <Column gap={ 0 }>
                     <Text bold>{ LocalizeText('navigator.roomsettings.pets') }</Text>
-                    <Flex alignItems="center" gap={ 1 }>
-                        <input className="form-check-input" type="checkbox" checked={ roomData.allowPets } onChange={ event => handleChange('allow_pets', event.target.checked) } />
-                        <Text>{ LocalizeText('navigator.roomsettings.allowpets') }</Text>
-                    </Flex>
-                    <Flex alignItems="center" gap={ 1 }>
-                        <input className="form-check-input" type="checkbox" checked={ roomData.allowPetsEat } onChange={ event => handleChange('allow_pets_eat', event.target.checked) } />
-                        <Text>{ LocalizeText('navigator.roomsettings.allowfoodconsume') }</Text>
-                    </Flex>
+                    <Text small>Controle se pets podem entrar e consumir comida no quarto.</Text>
                 </Column>
+                <label className="room-settings-check-row">
+                    <input className="form-check-input" type="checkbox" checked={ roomData.allowPets } onChange={ event => handleChange('allow_pets', event.target.checked) } />
+                    <span>{ LocalizeText('navigator.roomsettings.allowpets') }</span>
+                </label>
+                <label className="room-settings-check-row">
+                    <input className="form-check-input" type="checkbox" checked={ roomData.allowPetsEat } onChange={ event => handleChange('allow_pets_eat', event.target.checked) } />
+                    <span>{ LocalizeText('navigator.roomsettings.allowfoodconsume') }</span>
+                </label>
             </Column>
-        </>
+        </Column>
     );
 };

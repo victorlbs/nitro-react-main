@@ -1,12 +1,37 @@
+
+/* ============================================================
+   CATÁLOGO - UX APRIMORADA
+   Adicione ao final do seu Catalog.scss
+============================================================ */
+
 .nitro-catalog {
     width: $catalog-width;
     height: $catalog-height;
-    max-width: 701px;
-    max-height: 685px;
+
+    min-width: 620px;
     min-height: 610px;
+
+    /* Permite crescer conforme a tela */
+    max-width: 95vw;
+    max-height: 95vh;
+
+    transition:
+        width .18s ease,
+        height .18s ease;
 
     font[size='16'] {
         font-size: 20px;
+    }
+
+    /*
+     * Modo expandido.
+     * Funciona melhor do que depender apenas do resize manual.
+     */
+    &.nitro-catalog-expanded {
+        width: min(1050px, 95vw) !important;
+        height: min(820px, 92vh) !important;
+        max-width: 95vw;
+        max-height: 92vh;
     }
 
     .catalog-search-button {
@@ -23,26 +48,106 @@
     }
 }
 
-.nitro-catalog-gift {
-    width: 325px;
+/* ============================================================
+   TOOLBAR
+============================================================ */
 
-    .gift-preview {
-        width: 80px;
-        height: 80px;
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+.nitro-catalog-toolbar {
+    min-height: 38px;
+    padding: 5px 7px;
+    gap: 6px;
+
+    background: #e4e9ed;
+    border-left: 2px solid #b6bec5;
+    border-right: 2px solid #b6bec5;
+    border-bottom: 1px solid #aab3bb;
+}
+
+.nitro-catalog-toolbar-button {
+    min-height: 27px;
+    padding: 3px 8px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+    border: 1px solid #9ba6ae;
+    border-radius: 3px;
+
+    background: linear-gradient(
+        to bottom,
+        #ffffff 0%,
+        #e7ecef 100%
+    );
+
+    color: #34424b;
+    font-size: 11px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .8),
+        0 1px 0 rgba(0, 0, 0, .08);
+
+    &:hover {
+        background: linear-gradient(
+            to bottom,
+            #ffffff 0%,
+            #d9e3e9 100%
+        );
     }
 
-    .gift-color {
-        width: 15px;
-        height: 15px;
-        border-radius: $border-radius;
+    &:active,
+    &.active {
+        background: #cbd6dc;
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, .15);
     }
 }
 
+.nitro-catalog-toolbar-icon {
+    min-width: 14px;
+    text-align: center;
+    font-size: 13px;
+}
 
+/* ============================================================
+   CONTEÚDO
+============================================================ */
+
+.nitro-catalog-content {
+    min-height: 0;
+    overflow: hidden;
+}
+
+.nitro-catalog-main-grid {
+    height: 100%;
+    min-height: 0;
+}
+
+.nitro-catalog-navigation-column,
+.nitro-catalog-layout-column {
+    height: 100%;
+    min-height: 0;
+}
+
+/*
+ * O conteúdo interno agora pode rolar independentemente.
+ * Isso ajuda muito quando o catálogo é aumentado verticalmente.
+ */
+.nitro-catalog-navigation-column {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+.nitro-catalog-layout-column {
+    overflow: auto !important;
+}
+
+/* ============================================================
+   NAVEGAÇÃO LATERAL
+============================================================ */
 
 .nitro-catalog-navigation-grid-container {
     border-color: #b6bec5 !important;
@@ -59,12 +164,22 @@
     }
 
     .layout-grid-item {
-        font-size: $font-size-sm;
-        height: 23px !important;
+        min-height: 25px !important;
+        height: auto !important;
+
         border-color: unset !important;
         background-color: #cdd3d9;
         border: 0 !important;
-        padding: 1px 3px;
+
+        padding: 3px 5px;
+
+        transition:
+            background-color .12s ease,
+            transform .12s ease;
+
+        &:hover {
+            background-color: #dce2e7;
+        }
 
         .svg-inline--fa {
             color: $black;
@@ -74,94 +189,253 @@
     }
 }
 
+/* ============================================================
+   SCROLLBAR MAIS DISCRETA
+============================================================ */
 
-
-.nitro-catalog-layout-info-loyalty {
-    .info-loyalty-content {
-        background-repeat: no-repeat;
-        background-position: top right;
-        background-image: url('@/assets/images/catalog/diamond_info_illustration.gif');
-        padding-right: 123px;
-    }
-
-    .info-image {
-        width: 123px;
-        height: 350px;
-        background-image: url('@/assets/images/catalog/diamond_info_illustration.gif');
-    }
+.nitro-catalog-navigation-column,
+.nitro-catalog-layout-column {
+    scrollbar-width: thin;
 }
 
-.nitro-catalog-layout-vip-buy-grid {
-    .layout-grid-item {
-        height: 50px !important;
-        max-height: 50px !important;
+/* ============================================================
+   RESPONSIVO
+============================================================ */
 
-        .icon-hc-banner {
-            width: 68px;
-            height: 40px;
-            background: url('@/assets/images/catalog/hc_big.png') center
-                no-repeat;
+@media (max-width: 850px) {
+    .nitro-catalog {
+        min-width: 0;
+        width: 95vw !important;
+        max-width: 95vw;
+
+        &.nitro-catalog-expanded {
+            width: 96vw !important;
+            height: 90vh !important;
         }
     }
-}
 
-.nitro-catalog-layout-marketplace-grid {
-    .layout-grid-item {
-        height: 75px !important;
+    .nitro-catalog-toolbar-label {
+        display: none;
+    }
+
+    .nitro-catalog-toolbar-button {
+        min-width: 30px;
+        padding: 3px 6px;
     }
 }
 
-.nitro-catalog-layout-vip-gifts-grid {
-    .layout-grid-item {
-        height: 55px !important;
-        max-height: 55px !important;
-    }
+/* ============================================================
+   UX EXTRA - PREVIEW, FAVORITOS E GRADE RESPONSIVA
+============================================================ */
+
+.catalog-default-preview-container {
+    min-height: 255px;
+    overflow: visible !important;
 }
 
-.nitro-catalog-layout-marketplace-post-offer {
-    width: $marketplace-post-offer-width;
-    height: $marketplace-post-offer-height;
+.catalog-product-preview-enhanced {
+    min-width: 0;
 }
 
-.nitro-catalog-layout-bundle-grid {
-    .layout-grid-item {
-        background-color: transparent;
-    }
+.catalog-product-preview-stage {
+    min-height: 215px;
+    overflow: hidden;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, .04);
 }
 
-.nitro-catalog-header {
-    width: 290px;
-    height: 60px;
+.catalog-product-preview-zoom {
+    width: 100%;
+    height: 210px;
+    min-height: 210px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    transform-origin: center center;
 }
 
-.autocomplete-gift-container {
-    background: #fff;
-    padding: 8px;
-    list-style-type: none;
-    min-width: 307px;
-    border-radius: 0.2rem;
+.catalog-product-preview-zoom > * {
+    flex: 0 0 auto;
+}
+
+.catalog-product-preview-controls {
+    min-height: 30px;
+    flex-wrap: wrap;
+}
+
+.catalog-product-preview-controls .btn {
+    min-width: 28px;
+    min-height: 26px;
+    padding: 2px 6px;
+}
+
+.catalog-product-preview-zoom-label {
+    min-width: 38px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.catalog-responsive-item-grid {
+    min-height: 0;
+}
+
+.catalog-grid-offer-enhanced {
+    position: relative;
+}
+
+.catalog-grid-favorite {
     position: absolute;
-    font-size: 0.7875rem;
-    top: 81px;
-    left: 8px;
-    border: 1px solid #b6c1ce;
-    margin: 0;
-    border-radius: 2px;
-    margin: 0;
-    box-sizing: border-box;
-    max-height: 280px;
-    overflow-y: auto;
-    z-index: 1;
+    top: 2px;
+    right: 2px;
+    z-index: 5;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: rgba(70, 70, 70, .65);
+    background: rgba(255, 255, 255, .76);
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity .12s ease, transform .12s ease;
+}
 
-    .autocomplete-gift-item {
-        width: 100%;
-        box-sizing: border-box;
-        &:hover {
-            background-color: #ebf4ff;
-        }
+.catalog-grid-offer-enhanced:hover .catalog-grid-favorite,
+.catalog-grid-favorite.active {
+    opacity: 1;
+}
+
+.catalog-grid-favorite:hover {
+    transform: scale(1.12);
+}
+
+.catalog-grid-favorite.active {
+    color: #d89d00;
+}
+
+.catalog-quantity-quick-buttons {
+    flex-wrap: wrap;
+}
+
+.catalog-quantity-quick-buttons .btn {
+    min-width: 30px;
+    padding: 2px 6px;
+    font-size: 10px;
+}
+
+/* ============================================================
+   FAVORITOS E VISTOS RECENTEMENTE
+============================================================ */
+.nitro-catalog-local-navigation {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.nitro-catalog-local-navigation-item {
+    width: 100%;
+    min-height: 28px;
+    padding: 4px 6px;
+    border: 1px solid #aeb7be;
+    border-radius: 3px;
+    background: #d6dde2;
+    color: #283740;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color .12s ease, border-color .12s ease;
+
+    &:hover {
+        background: #e3e9ed;
+        border-color: #94a2ac;
+    }
+
+    &.active {
+        background: #b9d9e8;
+        border-color: #6fa4bd;
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .45);
+    }
+
+    .fa-icon {
+        flex: 0 0 auto;
+        font-size: 12px;
     }
 }
 
+.nitro-catalog-local-navigation-label {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.nitro-catalog-local-navigation-count {
+    min-width: 20px;
+    padding: 1px 5px;
+    border-radius: 9px;
+    background: rgba(0, 0, 0, .16);
+    color: #20313b;
+    text-align: center;
+    font-size: 10px;
+    font-weight: 700;
+}
 
 
-@import './views/targeted-offer/Offer.scss';
+/* ============================================================
+   CONFIGURAÇÕES DA LOJA - TOOLBAR
+============================================================ */
+.nitro-catalog-toolbar-actions {
+    position: relative;
+}
+
+.nitro-catalog-store-settings-wrapper {
+    position: relative;
+}
+
+.nitro-catalog-store-settings-popover {
+    position: absolute;
+    top: calc(100% + 5px);
+    right: 0;
+    z-index: 1000;
+    width: 230px;
+    padding: 8px;
+    border: 1px solid #8e9aa3;
+    border-radius: 4px;
+    background: #eef2f4;
+    color: #2f3d46;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, .25);
+}
+
+.nitro-catalog-store-settings-title {
+    padding-bottom: 6px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #c4ccd1;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.nitro-catalog-store-settings-row {
+    min-height: 28px;
+    margin: 0;
+    padding: 4px 3px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    user-select: none;
+
+    &:hover {
+        background: #dde5e9;
+    }
+
+    input {
+        margin: 0;
+        cursor: pointer;
+    }
+}

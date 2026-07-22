@@ -1,19 +1,109 @@
-import { FC } from 'react';
-import { NitroCardContentView, NitroCardHeaderView, NitroCardView } from '../common/card'; // Ajuste o path
+import { FC, useMemo, useState } from 'react';
+import { NitroCardContentView, NitroCardView } from '../common/card';
+import './CommandListModal.scss';
 
-export const CommandListModal: FC<{ commands: { name: string, desc: string }[] }> = ({ commands }) => {
+export interface CommandItem
+{
+    name: string;
+    desc: string;
+    category?: string;
+}
+
+interface CommandListModalProps
+{
+    commands: CommandItem[];
+    onClose?: () => void;
+}
+
+export const CommandListModal: FC<CommandListModalProps> = ({ commands = [], onClose = null }) =>
+{
+    const [ search, setSearch ] = useState('');
+    const [ activeCategory, setActiveCategory ] = useState<string>('');
+
+    const categories = useMemo(() =>
+    {
+        const uniqueCategories = Array.from(new Set(
+            commands.map(command => command.category || 'Comandos')
+        ));
+
+        return uniqueCategories.length ? uniqueCategories : [ 'Comandos' ];
+    }, [ commands ]);
+
+    const currentCategory = activeCategory || categories[0];
+
+    const filteredCommands = useMemo(() =>
+    {
+        const query = search.trim().toLowerCase();
+
+        return commands.filter(command =>
+        {
+            const category = command.category || 'Comandos';
+
+            if(category !== currentCategory) return false;
+
+            if(!query.length) return true;
+
+            return (
+                command.name.toLowerCase().includes(query) ||
+                command.desc.toLowerCase().includes(query)
+            );
+        });
+    }, [ commands, currentCategory, search ]);
+
     return (
-        <NitroCardView theme="primary" className="w-96">
-            <NitroCardHeaderView headerText="Comandos Disponíveis" onCloseClick={() => { /* Fechar logica */ }} />
-            <NitroCardContentView>
-                <div className="grid grid-cols-1 gap-2 p-2">
-                    {commands.map((cmd, index) => (
-                        <div key={index} className="flex justify-between p-2 bg-gray-800 rounded border border-gray-700 hover:bg-gray-700 transition">
-                            <span className="font-bold text-blue-400">{cmd.name}</span>
-                            <span className="text-gray-400 text-sm">{cmd.desc}</span>
+        <NitroCardView theme="primary" className="command-list-modal">
+            <div className="command-list-top">
+                <input
+                    type="text"
+                    value={ search }
+                    onChange={ event => setSearch(event.target.value) }
+                    placeholder="Busque por palavras chaves..."
+                />
+
+                <button
+                    type="button"
+                    className="command-list-close"
+                    onClick={ () => onClose && onClose() }
+                >
+                    ×
+                </button>
+            </div>
+
+            <div className="command-list-tabs">
+                { categories.map(category =>
+                    <button
+                        key={ category }
+                        type="button"
+                        className={ currentCategory === category ? 'active' : '' }
+                        onClick={ () =>
+                        {
+                            setActiveCategory(category);
+                            setSearch('');
+                        } }
+                    >
+                        { category }
+                    </button>
+                ) }
+            </div>
+
+            <NitroCardContentView className="command-list-content">
+                { filteredCommands.length === 0 &&
+                    <div className="command-list-empty">
+                        Nenhum comando encontrado.
+                    </div>
+                }
+
+                { filteredCommands.map((cmd, index) =>
+                    <div key={ `${ cmd.name }-${ index }` } className="command-list-item">
+                        <div className="command-list-name">
+                            { cmd.name }
                         </div>
-                    ))}
-                </div>
+
+                        <div className="command-list-desc">
+                            { cmd.desc }
+                        </div>
+                    </div>
+                ) }
             </NitroCardContentView>
         </NitroCardView>
     );

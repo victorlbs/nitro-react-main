@@ -6,6 +6,7 @@ import { ChatMessageTypeEnum, GetClubMemberLevel, GetConfiguration, GetSessionDa
 import { Base, Flex, Grid, NitroCardContentView, Text } from '../../../../common'; // Importações ajustadas
 import { useChatInputWidget, useRoom, useSessionInfo, useUiEvent } from '../../../../hooks';
 import { ChatInputStyleSelectorView } from './ChatInputStyleSelectorView';
+import { HabbiconsView } from './HabbiconsView';
 
 // NOVO: Lista simples de Emojis. Você pode adicionar quantos quiser aqui.
 const EMOJI_LIST = [
@@ -37,6 +38,7 @@ export const ChatInputView: FC<{}> = props =>
     const chatModeIdSpeak = useMemo(() => LocalizeText('widgets.chatinput.mode.speak'), []);
     const maxChatLength = useMemo(() => GetConfiguration<number>('chat.input.maxlength', 100), []);
     const [ selectedTextSize, setSelectedTextSize ] = useState<string>('M');
+    const [ habbiconsVisible, setHabbiconsVisible ] = useState(false);
 
     // NOVO: Estados para controlar a aba de Emojis
     const [ emojiSelectorVisible, setEmojiSelectorVisible ] = useState(false);
@@ -263,7 +265,7 @@ export const ChatInputView: FC<{}> = props =>
 
     return (
         createPortal(
-            <div className="nitro-chat-input-container" style={{ display: 'flex', alignItems: 'center' }}>
+            <div className="nitro-chat-input-container">
                 <div className="input-sizer align-items-center">
                     { !floodBlocked &&
                     <input ref={ inputRef } type="text" className="chat-input" placeholder={ LocalizeText('widgets.chatinput.default') } value={ chatValue } maxLength={ maxChatLength } onChange={ event => updateChatInput(event.target.value) } onMouseDown={ event => setInputFocus() } /> }
@@ -275,6 +277,9 @@ export const ChatInputView: FC<{}> = props =>
                 <div style={{ marginLeft: '5px', display: 'flex', alignItems: 'center' }}>
                     <Base pointer onClick={toggleEmojiSelector} style={{ fontSize: '18px', color: '#000', padding: '0 5px' }}>
                         😎
+                    </Base>
+                     <Base pointer     onClick={ () => setHabbiconsVisible(true) } style={{ fontSize: '18px', color: '#000', padding: '0 5px' }}>
+                        🐤
                     </Base>
                     
                     <Overlay show={emojiSelectorVisible} target={emojiTarget} placement="top">
@@ -302,6 +307,9 @@ export const ChatInputView: FC<{}> = props =>
                 </div>
                 {/* ----------------------------- */}
 
+                {/* BOTÃO HABBICONS - POSICIONADO FORA DA BARRA DO CHAT */}
+           
+
                 <ChatInputStyleSelectorView 
                     chatStyleId={ chatStyleId } 
                     chatStyleIds={ chatStyleIds } 
@@ -309,6 +317,9 @@ export const ChatInputView: FC<{}> = props =>
                     chatTextSize={ selectedTextSize }
                     setChatTextSize={ setSelectedTextSize } 
                 />
+
+                { habbiconsVisible &&
+                    <HabbiconsView onClose={ () => setHabbiconsVisible(false) } /> }
             </div>, document.getElementById('toolbar-chat-input-container'))
     );
 }
