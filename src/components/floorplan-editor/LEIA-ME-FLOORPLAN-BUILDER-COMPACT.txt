@@ -1,0 +1,18 @@
+FLOORPLAN BUILDER COMPACT
+
+Versão criada para construtores: ocupa menos espaço e deixa mais área do mapa visível.
+
+PRINCIPAIS AJUSTES
+- Toolbar compacta em uma única linha.
+- Botões pequenos com ícone, nome curto e atalho.
+- Altura com - / +, número atual e lista completa.
+- Desfazer, refazer, copiar e colar sempre à mão.
+- Grade, alturas, simetria e zoom em controles rápidos.
+- Ações avançadas escondidas no botão "Mais".
+- Modelos rápidos para sala, cassino, loja e labirinto.
+- Rodapé menor e botões de salvamento mais diretos.
+- Mais espaço vertical para o canvas.
+
+INSTALAÇÃO
+Substitua a pasta src/components/floorplan-editor e recompile o Nitro.
+Apague node_modules/.vite caso o estilo anterior continue em cache.

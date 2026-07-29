@@ -1,0 +1,21 @@
+FLOORPLAN EDITOR PRO — UX GUIADA
+
+Esta versão reorganiza o editor para ser mais profissional e fácil de entender, mantendo todas as ferramentas avançadas.
+
+MELHORIAS DE EXPERIÊNCIA
+- Fluxo visual em 4 etapas: ferramenta, altura, edição e salvamento.
+- Ferramentas principais com nome, ícone e atalho visível.
+- Explicação contextual da ferramenta selecionada.
+- Controle de altura simplificado com botões + e -.
+- Ações comuns separadas das ações avançadas.
+- Ferramentas avançadas recolhidas por padrão.
+- Controles de visualização com interruptores claros.
+- Textos de botões mais objetivos.
+- Resumo do mapa sempre visível.
+- Layout responsivo e modo noturno.
+
+INSTALAÇÃO
+Substitua a pasta:
+src/components/floorplan-editor
+
+Depois reinicie o Vite/Nitro para recompilar o SCSS.
