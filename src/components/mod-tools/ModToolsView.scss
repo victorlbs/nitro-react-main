@@ -1,70 +1,193 @@
-.nitro-mod-tools {
-    width: $nitro-mod-tools-width;
-}
+.nitro-mod-tools { width: $nitro-mod-tools-width; }
 
 .nitro-mod-tools-room {
     width: 240px;
-
-    .username {
-        color: #1E7295;
-        text-decoration: underline;
-    }
+    .username { color: #1E7295; text-decoration: underline; }
 }
 
 .nitro-mod-tools-user {
     width: 350px;
     height: 370px;
-
-    .username {
-        color: #1E7295;
-        text-decoration: underline;
-    }
-
+    .username { color: #1E7295; text-decoration: underline; }
     .table {
         color: $black;
-
-        > :not(caption)>*>* {
-            box-shadow: none;
-            border-bottom: 1px solid rgba(0, 0, 0, .2);
-        }
-
-        &.table-striped>tbody>tr:nth-of-type(odd) {
-            color: $black;
-            background: rgba(0, 0, 0, .05);
-        }
+        > :not(caption)>*>* { box-shadow: none; border-bottom: 1px solid rgba(0, 0, 0, .2); }
+        &.table-striped>tbody>tr:nth-of-type(odd) { color: $black; background: rgba(0, 0, 0, .05); }
     }
 }
 
-.nitro-mod-tools-user-visits {
-    min-width: 300px;
-}
+.nitro-mod-tools-user-visits { min-width: 300px; width: 250px; height: 250px; }
+.nitro-mod-tools-chatlog { width: 400px; height: 250px; }
+.nitro-mod-tools-tickets { width: 400px; height: 200px; }
+.nitro-mod-tools-handle-issue { width: 400px; }
+.nitro-mod-tools-chatlog, .nitro-mod-tools-user-visits { .log-entry.highlighted { border: 1px solid $red; } }
 
-.nitro-mod-tools-chatlog {
-    width: 400px;
-    height: 250px;
-}
+/* Mod Tools Compacto: todo o novo comportamento fica isolado nesta pasta. */
+.nitro-mod-tools-compact {
+    width: 390px;
+    height: 500px;
+    max-height: calc(100vh - 28px);
+    font-size: 12px;
 
-.nitro-mod-tools-user-visits {
-    width: 250px;
-    height: 250px;
-}
+    &.is-top { z-index: 9998 !important; }
+    &.is-discreet { opacity: .82; transition: opacity .15s ease; }
+    &.is-discreet:hover { opacity: 1; }
 
-.nitro-mod-tools-tickets {
-    width: 400px;
-    height: 200px;
-}
-
-.nitro-mod-tools-handle-issue {
-    width: 400px;
-}
-
-.nitro-mod-tools-chatlog,
-.nitro-mod-tools-user-visits {
-
-    .log-entry {
-
-        &.highlighted {
-            border: 1px solid $red;
-        }
+    .compact-modtools-content {
+        padding: 0 !important;
+        overflow: hidden;
+        background: #e8edf2;
     }
+
+    .modtools-compact-head { padding: 7px; border-bottom: 1px solid rgba(0,0,0,.14); background: #f7f9fb; }
+    .modtools-status-strip { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; color: #334456; }
+    .modtools-status-strip span { padding: 3px 6px; border: 1px solid #d4dce4; border-radius: 6px; background: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .modtools-status-strip span:nth-child(3) { flex: 1; }
+    .modtools-status-strip button { width: 25px; height: 23px; border: 1px solid #c8d1da; border-radius: 5px; background: #fff; font-weight: 900; }
+
+    .modtools-search-row { display: flex; gap: 5px; }
+    input, textarea, select { width: 100%; border: 1px solid #c7d0da; border-radius: 6px; background: #fff; color: #263746; font: inherit; outline: none; }
+    input, select { min-height: 30px; padding: 5px 7px; }
+    textarea { min-height: 58px; padding: 7px; resize: vertical; }
+    input:focus, textarea:focus, select:focus { border-color: #3f88b5; box-shadow: 0 0 0 2px rgba(63,136,181,.13); }
+    .modtools-search-row button { flex: 0 0 35px; border: 0; border-radius: 6px; color: #fff; background: #357da9; font-size: 18px; }
+
+    .modtools-tabbar { display: grid; grid-template-columns: repeat(5, 1fr); background: #20384c; }
+    .modtools-tabbar button { position: relative; min-height: 45px; border: 0; border-right: 1px solid rgba(255,255,255,.08); color: #cbd9e4; background: transparent; font-weight: 700; }
+    .modtools-tabbar button span, .modtools-tabbar button small { display: block; }
+    .modtools-tabbar button span { font-size: 15px; line-height: 16px; }
+    .modtools-tabbar button small { font-size: 9px; }
+    .modtools-tabbar button.active, .modtools-tabbar button:hover { color: #fff; background: rgba(255,255,255,.15); }
+    .modtools-tabbar button b { position: absolute; top: 3px; right: 5px; min-width: 16px; padding: 1px 4px; border-radius: 9px; color: #fff; background: #d64a4a; font-size: 9px; }
+
+    .modtools-compact-body { height: 390px; padding: 7px; overflow-y: auto; }
+    .modtools-quick-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin-bottom: 7px; }
+    .modtools-quick-grid button { min-height: 54px; border: 1px solid #ccd5dd; border-radius: 8px; background: #fff; color: #263746; font-size: 17px; box-shadow: 0 1px 3px rgba(0,0,0,.05); }
+    .modtools-quick-grid button span { display: block; margin-top: 2px; font-size: 10px; font-weight: 700; }
+    button:disabled { opacity: .45; cursor: not-allowed; }
+
+    .modtools-box { margin-bottom: 7px; padding: 8px; border: 1px solid #ccd5dd; border-radius: 8px; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
+    .modtools-box > header { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+    .modtools-box > header b { color: #24384a; font-size: 12px; }
+    .modtools-box > header small { color: #6d7a86; }
+    .modtools-box > header button { border: 0; border-radius: 5px; color: #376f92; background: #eaf2f7; font-size: 10px; }
+
+    .modtools-list { display: flex; flex-direction: column; gap: 4px; }
+    .modtools-row, .modtools-ticket-row, .modtools-note { display: flex; align-items: center; justify-content: space-between; gap: 7px; padding: 6px; border: 1px solid #e0e5ea; border-radius: 6px; background: #f7f9fb; }
+    .modtools-row span, .modtools-ticket-row span { min-width: 0; flex: 1; }
+    .modtools-row b, .modtools-row small, .modtools-ticket-row b, .modtools-ticket-row small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .modtools-row small, .modtools-ticket-row small { color: #71808d; font-size: 9px; }
+    .modtools-row button, .modtools-ticket-row button, .modtools-note button { flex: 0 0 auto; border: 1px solid #ccd5dd; border-radius: 5px; background: #fff; color: #385d77; }
+    .priority-high { border-left: 4px solid #db4747; }
+    .priority-medium { border-left: 4px solid #e7a02d; }
+    .priority-low { border-left: 4px solid #58a96d; }
+
+    .modtools-chip-wrap { display: flex; flex-wrap: wrap; gap: 4px; }
+    .modtools-chip { max-width: 145px; padding: 4px 7px; border: 1px solid #c9d4dc; border-radius: 12px; background: #eef5f9; color: #34556c; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10px; }
+    .modtools-empty { margin: 4px 0; color: #7a8791; font-size: 10px; text-align: center; }
+
+    .modtools-user-summary { display: flex; align-items: center; gap: 8px; padding: 7px; border-radius: 7px; background: #eff5f8; }
+    .modtools-user-summary span { flex: 1; min-width: 0; }
+    .modtools-user-summary b, .modtools-user-summary small { display: block; }
+    .modtools-user-summary small { color: #677784; font-size: 9px; }
+    .modtools-avatar { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; color: #fff; background: #387fa9; font-size: 17px; font-weight: 800; }
+    .modtools-user-summary > button { border: 1px solid #c8d3db; border-radius: 5px; background: #fff; }
+    .modtools-action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 6px; }
+    .modtools-action-grid button, .modtools-backup-row button { min-height: 29px; border: 1px solid #c4ced7; border-radius: 6px; color: #314c61; background: #f6f8fa; font-weight: 700; font-size: 10px; }
+
+    .modtools-primary, .modtools-danger { width: 100%; min-height: 30px; margin-top: 5px; border: 0; border-radius: 6px; color: #fff; font-weight: 700; }
+    .modtools-primary { background: #357fa9; }
+    .modtools-danger { background: #b84a4a; }
+    .notes-list { margin-top: 5px; }
+    .modtools-note span { flex: 1; color: #4a5965; font-size: 10px; }
+
+    .modtools-room-summary { display: flex; align-items: center; justify-content: space-between; padding: 9px; border-radius: 7px; background: #eef4f8; }
+    .modtools-room-summary strong { font-size: 17px; color: #2d5068; }
+    .modtools-room-summary button { border: 1px solid #c7d1d9; border-radius: 5px; background: #fff; font-size: 10px; }
+
+    .modtools-ticket-status { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-bottom: 6px; }
+    .modtools-ticket-status span { padding: 7px; border-radius: 7px; background: #eef4f8; text-align: center; }
+    .modtools-ticket-status strong, .modtools-ticket-status small { display: block; }
+    .modtools-ticket-status strong { color: #284d65; font-size: 15px; }
+    .modtools-ticket-status small { color: #74818b; font-size: 9px; }
+
+    .modtools-two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+    .modtools-generated { display: flex; align-items: center; gap: 5px; margin-top: 5px; padding: 6px; border: 1px dashed #b9c8d2; border-radius: 6px; background: #f4f8fa; }
+    .modtools-generated span { flex: 1; overflow-wrap: anywhere; font-size: 10px; }
+    .modtools-generated button { border: 0; background: transparent; }
+    .modtools-calculation { margin-top: 5px; padding: 7px; border-radius: 6px; background: #edf5f0; text-align: center; }
+    .modtools-calculation b, .modtools-calculation small { display: block; }
+    .modtools-calculation small { color: #63766a; font-size: 9px; }
+
+    .modtools-toggle { display: flex; align-items: center; justify-content: space-between; min-height: 29px; border-bottom: 1px solid #edf0f2; }
+    .modtools-toggle input { width: auto; min-height: auto; }
+    .modtools-backup-row { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 6px; }
+    .shortcuts p { margin: 0; color: #63717d; line-height: 1.6; font-size: 9px; }
+    kbd { padding: 1px 4px; border: 1px solid #ccd3d9; border-radius: 4px; background: #f1f3f5; color: #40505e; box-shadow: 0 1px 0 #fff inset; }
+
+    .modtools-confirm-hint { position: absolute; right: 8px; bottom: 8px; left: 8px; padding: 6px; border-radius: 6px; color: #6e4d15; background: #fff5d9; font-size: 9px; }
+
+    &.theme-escuro {
+        .compact-modtools-content, .modtools-compact-body { background: #202a33; }
+        .modtools-compact-head { border-color: #33434f; background: #26343e; }
+        .modtools-status-strip { color: #d9e2e9; }
+        .modtools-status-strip span, .modtools-status-strip button, input, textarea, select { border-color: #475864; background: #172129; color: #e6edf2; }
+        .modtools-box, .modtools-quick-grid button { border-color: #3d4c58; background: #2a3741; color: #e7edf1; }
+        .modtools-box > header b { color: #f3f6f8; }
+        .modtools-row, .modtools-ticket-row, .modtools-note, .modtools-action-grid button, .modtools-backup-row button { border-color: #455661; background: #202c35; color: #e0e8ed; }
+        .modtools-user-summary, .modtools-room-summary, .modtools-ticket-status span, .modtools-calculation { background: #1d2a33; }
+        .modtools-user-summary b, .modtools-room-summary strong, .modtools-ticket-status strong, .modtools-calculation b { color: #dcebf4; }
+        .modtools-chip { border-color: #486171; background: #263c49; color: #d6e8f3; }
+        .modtools-generated { border-color: #4a606e; background: #1e2c35; color: #dbe5eb; }
+        .modtools-toggle { border-color: #3b4a55; color: #e0e7ec; }
+    }
+}
+
+.modtools-mini-bar {
+    position: fixed;
+    top: 42px;
+    left: 12px;
+    z-index: 9998;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    min-width: 210px;
+    max-width: 320px;
+    padding: 7px 9px;
+    border: 1px solid rgba(0,0,0,.35);
+    border-radius: 7px;
+    color: #fff;
+    background: #263f53;
+    box-shadow: 0 4px 14px rgba(0,0,0,.28);
+    font-size: 11px;
+    text-align: left;
+}
+.modtools-mini-bar b { min-width: 19px; padding: 1px 5px; border-radius: 9px; background: #d84b4b; text-align: center; }
+.modtools-mini-bar small { margin-left: auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.modtools-mini-bar.theme-escuro { background: #17232c; }
+.modtools-mini-bar.is-discreet { opacity: .78; }
+.modtools-mini-bar.is-top { z-index: 9999; }
+
+.modtools-compact-toast {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 10000;
+    max-width: 300px;
+    padding: 9px 12px;
+    border-radius: 7px;
+    color: #fff;
+    background: #1e3648;
+    box-shadow: 0 6px 20px rgba(0,0,0,.3);
+    font-size: 11px;
+    font-weight: 700;
+}
+
+@media (max-height: 600px) {
+    .nitro-mod-tools-compact { height: calc(100vh - 18px); }
+    .nitro-mod-tools-compact .modtools-compact-body { height: calc(100vh - 125px); }
+}
+
+@media (max-width: 430px) {
+    .nitro-mod-tools-compact { width: calc(100vw - 14px); }
 }
